@@ -18,4 +18,8 @@ public abstract class ModePlugin extends SubPlugin {
     protected ModePlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
         super(loader, desc, dataFolder, file);
     }
+    @Override
+    protected void init(){
+
+    }
 }

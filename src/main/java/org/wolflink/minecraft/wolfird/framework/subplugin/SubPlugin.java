@@ -15,7 +15,6 @@ import java.util.Calendar;
  * 可能是：Mode(模式插件)、Addon(功能拓展插件)、System(玩法系统插件)
  */
 @SuppressWarnings("Do not inherit this class,it's just used for framework.")
-@AllArgsConstructor
 public abstract class SubPlugin extends JavaPlugin {
 
     @Getter
@@ -27,6 +26,12 @@ public abstract class SubPlugin extends JavaPlugin {
     @Getter
     private Calendar lastUpdate;
 
+    public SubPlugin(String name,String version,String author,Calendar lastUpdate){
+        this.name = name;
+        this.version = version;
+        this.author = author;
+        this.lastUpdate = lastUpdate;
+    }
     /**
      * 1.18.2 MockBukkit Entrance Point
      */
@@ -37,4 +42,10 @@ public abstract class SubPlugin extends JavaPlugin {
         author = "TEST";
         lastUpdate = Calendar.getInstance();
     }
+
+    /**
+     * 初始化方法，向 Framework 容器注册之类的。
+     * 生命周期在 onEnable 之前，在完成类成员属性初始化之后。
+     */
+    protected abstract void init();
 }

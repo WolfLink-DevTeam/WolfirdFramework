@@ -18,4 +18,9 @@ public abstract class SystemPlugin extends SubPlugin {
     protected SystemPlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
         super(loader, desc, dataFolder, file);
     }
+
+    @Override
+    protected void init(){
+
+    }
 }
