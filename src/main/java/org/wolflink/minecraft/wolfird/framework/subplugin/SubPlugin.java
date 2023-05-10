@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.ioc.AddonContainer;
 import org.wolflink.minecraft.wolfird.framework.ioc.ModeContainer;
 import org.wolflink.minecraft.wolfird.framework.ioc.SubPluginContainer;
@@ -35,15 +36,15 @@ public abstract class SubPlugin extends JavaPlugin {
         this.info = this.getDescription();
     }
     public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){
-        if(this instanceof AddonPlugin) return (T) Spring.INSTANCE.getBean("addonContainer", AddonContainer.class);
-        else if(this instanceof ModePlugin) return (T) Spring.INSTANCE.getBean("modeContainer", ModeContainer.class);
-        else if(this instanceof SystemPlugin) return (T) Spring.INSTANCE.getBean("systemContainer", SystemContainer.class);
+        if(this instanceof AddonPlugin) return (T) Guice.getInstance().getInjector().getInstance(AddonContainer.class);
+        else if(this instanceof ModePlugin) return (T) Guice.getInstance().getInjector().getInstance(ModeContainer.class);
+        else if(this instanceof SystemPlugin) return (T) Guice.getInstance().getInjector().getInstance(SystemContainer.class);
         return null;
     }
 
     /**
      * 初始化方法，向 Framework 容器注册之类的。
-     * 该方法的调用顺序应该在 onEnable 之前，在完成类成员属性初始化之后。
+     * 该方法的调用顺序应该在 onEnable 之前。
      */
     protected abstract void init();
 }

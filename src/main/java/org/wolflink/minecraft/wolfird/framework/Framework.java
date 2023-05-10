@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPluginLoader;
@@ -11,7 +12,8 @@ import java.io.File;
  * 框架 Bukkit 插件主类
  */
 public final class Framework extends SubPlugin {
-    public static Framework INSTANCE;
+
+    @Getter private static Framework INSTANCE;
     public Framework() {
         init();
     }
@@ -28,7 +30,7 @@ public final class Framework extends SubPlugin {
         loadSubPlugins("system-plugin");
         loadSubPlugins("addon-plugin");
 
-        Spring.init();
+
     }
     @Override public void onEnable() {}
     @Override public void onDisable() {}
