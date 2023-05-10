@@ -32,8 +32,6 @@ public final class Framework extends SubPlugin {
     private void loadSubPlugins(String subPluginFolderName){
         File subPluginFolder = new File(this.getDataFolder().getPath(),subPluginFolderName);
         if(!subPluginFolder.exists())subPluginFolder.mkdirs();
-        //TODO
-        System.out.println("测试路径"+subPluginFolder.getPath());
         Bukkit.getPluginManager().loadPlugins(subPluginFolder);
     }
 }
