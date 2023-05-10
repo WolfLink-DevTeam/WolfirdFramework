@@ -4,5 +4,5 @@ import org.springframework.stereotype.Component;
 import org.wolflink.minecraft.wolfird.framework.subplugin.AddonPlugin;
 
 @Component
-public class AddonContainer extends IContainer<AddonPlugin> {
+public class AddonContainer extends SubPluginContainer<AddonPlugin> {
 }

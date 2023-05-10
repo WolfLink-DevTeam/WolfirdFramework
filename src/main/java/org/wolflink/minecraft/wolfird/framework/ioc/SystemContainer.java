@@ -4,5 +4,5 @@ import org.springframework.stereotype.Component;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SystemPlugin;
 
 @Component
-public class SystemContainer extends IContainer<SystemPlugin> {
+public class SystemContainer extends SubPluginContainer<SystemPlugin> {
 }

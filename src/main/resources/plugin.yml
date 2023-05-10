@@ -1,6 +1,6 @@
 name: WolfirdFramework
 version: '${version}'
-main: org.wolflink.minecraft.wolfird.framework.WolfirdFramework
+main: org.wolflink.minecraft.wolfird.framework.Framework
 api-version: 1.18
 load: STARTUP
 authors: [WolfLink-DevTeam]
