@@ -25,6 +25,7 @@ public final class Framework extends SubPlugin {
 
     @Override protected void init() {
         INSTANCE = this;
+        this.saveDefaultConfig();
 
         loadSubPlugins("mode-plugin");
         loadSubPlugins("system-plugin");
