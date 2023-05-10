@@ -14,10 +14,6 @@ public abstract class SystemPlugin extends SubPlugin {
     SystemPlugin() {
         init();
     }
-    protected SystemPlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
-        super(loader, desc, dataFolder, file);
-        init();
-    }
     @Override
     protected void init(){
         SystemContainer container = getContainer();

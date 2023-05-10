@@ -15,10 +15,6 @@ public abstract class ModePlugin extends SubPlugin {
     ModePlugin() {
         init();
     }
-    protected ModePlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
-        super(loader, desc, dataFolder, file);
-        init();
-    }
     @Override
     protected void init(){
         ModeContainer container = getContainer();

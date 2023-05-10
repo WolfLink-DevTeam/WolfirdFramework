@@ -28,13 +28,7 @@ public abstract class SubPlugin extends JavaPlugin {
     public SubPlugin(){
         this.info = this.getDescription();
     }
-    /**
-     * 1.18.2 MockBukkit Entrance Point
-     */
-    protected SubPlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file){
-        super(loader,desc,dataFolder,file);
-        this.info = this.getDescription();
-    }
+
     public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){
         if(this instanceof AddonPlugin) return (T) Guice.getInstance().getInjector().getInstance(AddonContainer.class);
         else if(this instanceof ModePlugin) return (T) Guice.getInstance().getInjector().getInstance(ModeContainer.class);

@@ -15,10 +15,6 @@ public abstract class AddonPlugin extends SubPlugin {
     AddonPlugin() {
         init();
     }
-    protected AddonPlugin(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
-        super(loader, desc, dataFolder, file);
-        init();
-    }
 
     @Override
     protected void init(){

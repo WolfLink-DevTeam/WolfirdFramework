@@ -18,11 +18,6 @@ public final class Framework extends SubPlugin {
         init();
     }
 
-    protected Framework(JavaPluginLoader loader, PluginDescriptionFile desc, File dataFolder, File file) {
-        super(loader, desc, dataFolder, file);
-        init();
-    }
-
     @Override protected void init() {
         INSTANCE = this;
         this.saveDefaultConfig();
