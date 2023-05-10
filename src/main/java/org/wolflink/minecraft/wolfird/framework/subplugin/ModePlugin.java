@@ -12,7 +12,7 @@ import java.io.File;
  */
 public abstract class ModePlugin extends SubPlugin {
 
-    ModePlugin() {
+    public ModePlugin() {
         init();
     }
     @Override

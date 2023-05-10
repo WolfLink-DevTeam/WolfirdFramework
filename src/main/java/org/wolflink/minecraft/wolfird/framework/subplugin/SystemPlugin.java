@@ -11,7 +11,7 @@ import java.io.File;
  * 例如：天赋树、商店系统、数据统计...
  */
 public abstract class SystemPlugin extends SubPlugin {
-    SystemPlugin() {
+    public SystemPlugin() {
         init();
     }
     @Override

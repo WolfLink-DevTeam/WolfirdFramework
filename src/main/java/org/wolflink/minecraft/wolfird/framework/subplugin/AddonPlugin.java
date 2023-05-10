@@ -12,7 +12,7 @@ import java.io.File;
  */
 public abstract class AddonPlugin extends SubPlugin {
 
-    AddonPlugin() {
+    public AddonPlugin() {
         init();
     }
 
