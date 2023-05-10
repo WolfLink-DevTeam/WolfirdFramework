@@ -21,14 +21,12 @@ public final class Framework extends SubPlugin {
     @Override protected void init() {
         INSTANCE = this;
         this.saveDefaultConfig();
-
+    }
+    @Override public void onEnable() {
         loadSubPlugins("mode-plugin");
         loadSubPlugins("system-plugin");
         loadSubPlugins("addon-plugin");
-
-
     }
-    @Override public void onEnable() {}
     @Override public void onDisable() {}
 
     private void loadSubPlugins(String subPluginFolderName){

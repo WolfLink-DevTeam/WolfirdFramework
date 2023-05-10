@@ -18,23 +18,9 @@ public final class Guice {
         if(INSTANCE == null)INSTANCE = new Guice();
         return INSTANCE;
     }
-    private Guice() {
-        configModules.add(new GuiceModule());
-    }
-    private final List<AbstractModule> configModules = new ArrayList<>();
+    private Guice() { }
 
-    @Getter private Injector injector;
-
-    void addConfigModule(AbstractModule module) {
-        configModules.add(module);
-    }
-
-    /**
-     * 在所有子插件加载完毕后调用
-     */
-    void init() {
-        injector = com.google.inject.Guice.createInjector(configModules);
-    }
+    @Getter private final Injector injector = com.google.inject.Guice.createInjector(new GuiceModule());;
 
 }
 
