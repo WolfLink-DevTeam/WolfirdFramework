@@ -30,9 +30,9 @@ public abstract class SubPlugin extends JavaPlugin {
     }
 
     public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){
-        if(this instanceof AddonPlugin) return (T) Guice.getInstance().getInjector().getInstance(AddonContainer.class);
-        else if(this instanceof ModePlugin) return (T) Guice.getInstance().getInjector().getInstance(ModeContainer.class);
-        else if(this instanceof SystemPlugin) return (T) Guice.getInstance().getInjector().getInstance(SystemContainer.class);
+        if(this instanceof AddonPlugin) return (T) Guice.getBean(AddonContainer.class);
+        else if(this instanceof ModePlugin) return (T) Guice.getBean(ModeContainer.class);
+        else if(this instanceof SystemPlugin) return (T) Guice.getBean(SystemContainer.class);
         return null;
     }
 

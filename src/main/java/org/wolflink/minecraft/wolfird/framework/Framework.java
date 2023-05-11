@@ -1,9 +1,11 @@
 package org.wolflink.minecraft.wolfird.framework;
 
 import lombok.Getter;
+import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPluginLoader;
+import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
 import java.io.File;
@@ -26,6 +28,7 @@ public final class Framework extends SubPlugin {
         loadSubPlugins("mode-plugin");
         loadSubPlugins("system-plugin");
         loadSubPlugins("addon-plugin");
+
     }
     @Override public void onDisable() {}
 
