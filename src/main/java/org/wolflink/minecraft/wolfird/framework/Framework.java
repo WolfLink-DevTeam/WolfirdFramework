@@ -1,14 +1,16 @@
 package org.wolflink.minecraft.wolfird.framework;
 
+import com.google.inject.Singleton;
 import lombok.Getter;
-import lombok.val;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPluginLoader;
+import org.wolflink.minecraft.wolfird.framework.container.SubPluginContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
+import org.wolflink.minecraft.wolfird.framework.utils.ReflectionUtil;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 框架 Bukkit 插件主类

@@ -2,12 +2,6 @@ package org.wolflink.minecraft.wolfird.framework;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Scopes;
-import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
-import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
-import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
-import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 
 public final class Guice {
 
@@ -26,10 +20,6 @@ public final class Guice {
     public static <T> T getBean(Class<T> clazz) {
         return getInstance().injector.getInstance(clazz);
     }
-    public static <T> T getBean(Key<T> key) {
-        return getInstance().injector.getInstance(key);
-    }
-
 }
 
 final class GuiceModule extends AbstractModule {
