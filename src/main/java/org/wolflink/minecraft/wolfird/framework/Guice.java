@@ -3,14 +3,10 @@ package org.wolflink.minecraft.wolfird.framework;
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
-import lombok.Getter;
-import org.wolflink.minecraft.wolfird.framework.ioc.AddonContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.ModeContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.SystemContainer;
+import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
+import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
+import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public final class Guice {
 

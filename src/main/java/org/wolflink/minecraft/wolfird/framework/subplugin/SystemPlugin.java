@@ -1,10 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.subplugin;
 
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPluginLoader;
-import org.wolflink.minecraft.wolfird.framework.ioc.SystemContainer;
-
-import java.io.File;
+import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
 
 /**
  * 大型玩法系统拓展插件

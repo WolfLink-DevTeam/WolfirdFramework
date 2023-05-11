@@ -1,10 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.subplugin;
 
-import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.java.JavaPluginLoader;
-import org.wolflink.minecraft.wolfird.framework.ioc.ModeContainer;
-
-import java.io.File;
+import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
 
 /**
  * 游戏模式拓展插件

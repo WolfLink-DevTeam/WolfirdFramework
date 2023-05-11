@@ -1,12 +1,8 @@
-package org.wolflink.minecraft.wolfird.framework.ioc;
+package org.wolflink.minecraft.wolfird.framework.container;
 
-import org.bukkit.Bukkit;
-import org.wolflink.minecraft.wolfird.framework.Framework;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class SubPluginContainer<T extends SubPlugin> {

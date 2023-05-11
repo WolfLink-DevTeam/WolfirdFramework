@@ -4,14 +4,11 @@ package org.wolflink.minecraft.wolfird.framework.subplugin;
 import lombok.Getter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.java.JavaPluginLoader;
 import org.wolflink.minecraft.wolfird.framework.Guice;
-import org.wolflink.minecraft.wolfird.framework.ioc.AddonContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.ModeContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.SubPluginContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.SystemContainer;
-
-import java.io.File;
+import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
+import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
+import org.wolflink.minecraft.wolfird.framework.container.SubPluginContainer;
+import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
 
 /**
  * 代表一个 Wolfird 子插件抽象

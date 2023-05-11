@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.ioc;
+package org.wolflink.minecraft.wolfird.framework.container;
 
 import org.wolflink.minecraft.wolfird.framework.subplugin.SystemPlugin;
 
