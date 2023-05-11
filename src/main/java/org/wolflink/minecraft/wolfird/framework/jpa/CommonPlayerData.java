@@ -1,8 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.jpa;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +17,10 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "common_player_data")
+//@Entity
+//@Table(name = "common_player_data")
 public class CommonPlayerData {
-    @Id
+//    @Id
     UUID uuid;
 
 }
