@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
+import com.google.inject.Singleton;
 import com.mysql.cj.log.Log;
 import org.bukkit.Bukkit;
 
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
  * 例如：
  * [Wolfird|信息] abab
  */
+@Singleton
 public class BaseNotifier {
     private final Logger logger = Bukkit.getLogger();
     private boolean debugMode = false;
@@ -28,6 +30,7 @@ public class BaseNotifier {
                 "§8[ {prefix} §8] §f›§7›§8› §r{msg}",
                 "\n§8[ {prefix} §8] §f›§7›§8› \n\n§r{msg}\n\n"
         );
+        System.out.println("创建一个新的logger");
     }
     public BaseNotifier(String prefix,String consoleTemplate,String chatTemplate,String notifyTemplate) {
         this.prefix = prefix;
