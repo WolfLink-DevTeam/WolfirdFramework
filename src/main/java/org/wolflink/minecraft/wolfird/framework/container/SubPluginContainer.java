@@ -1,7 +1,11 @@
 package org.wolflink.minecraft.wolfird.framework.container;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,24 +13,27 @@ public abstract class SubPluginContainer<T extends SubPlugin> {
 
     /**
      * 容器管理的子插件对象引用列表
-     * 以插件全名(插件名+插件版本)作为索引
+     * 以插件名作为索引(不是全名，便于Bukkit查找)
      */
-    public final Map<String,T> pluginItems = new HashMap<>();
+    private final Map<String,T> pluginItems = new HashMap<>();
 
-    /**
-     * 启用子插件
-     * @return 是否成功启用(否，已经被加载或发生错误)
-     */
-    public boolean enablePlugin(){
+    public boolean registerSubPlugin(@Nonnull String name,@Nonnull T instance) {
+        if(pluginItems.containsKey(name))return false;
+        pluginItems.put(name,instance);
         return true;
     }
+    public boolean unregisterSubPlugin(@Nonnull String name,@Nonnull T instance) {
+        if(pluginItems.containsKey(name) && pluginItems.containsValue(instance)) {
+            pluginItems.remove(name);
+            return true;
+        } else return false;
+    }
 
-    /**
-     * 禁用子插件
-     * @return 是否成功禁用(否，已经被禁用或发生错误)
-     */
-    public boolean disablePlugin(){
-        return true;
+    @Nullable
+    public T getSubPlugin(String name) {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin(name);
+        if(plugin == null || ! plugin.isEnabled())return null;
+        return pluginItems.get(name);
     }
 
 }

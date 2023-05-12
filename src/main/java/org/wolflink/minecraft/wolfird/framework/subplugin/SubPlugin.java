@@ -9,6 +9,7 @@ import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
 import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
 import org.wolflink.minecraft.wolfird.framework.container.SubPluginContainer;
 import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
+import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
 
 /**
  * 代表一个 Wolfird 子插件抽象
@@ -22,8 +23,11 @@ public abstract class SubPlugin extends JavaPlugin {
      */
     protected final @Getter PluginDescriptionFile info;
 
+    protected final @Getter SubPluginNotifier notifier;
+
     public SubPlugin(){
         this.info = this.getDescription();
+        this.notifier = new SubPluginNotifier(info.getPrefix());
     }
 
     public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){

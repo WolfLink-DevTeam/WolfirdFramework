@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.subplugin;
 
+import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
 import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
 
 /**
@@ -13,7 +14,10 @@ public abstract class ModePlugin extends SubPlugin {
     }
     @Override
     protected void init(){
+        notifier.info("正在向框架注册该拓展插件...");
         ModeContainer container = getContainer();
-        container.pluginItems.put(info.getFullName(),this);
+        if(container.registerSubPlugin(info.getName(),this)) {
+            notifier.info("注册完成");
+        } else notifier.error("注册失败");
     }
 }
