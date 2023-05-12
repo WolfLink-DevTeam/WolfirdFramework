@@ -1,16 +1,15 @@
 package org.wolflink.minecraft.wolfird.framework;
 
-import com.google.inject.Singleton;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.wolflink.minecraft.wolfird.framework.container.SubPluginContainer;
+import org.wolflink.minecraft.wolfird.framework.jpa.CommonPlayerData;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
-import org.wolflink.minecraft.wolfird.framework.utils.ReflectionUtil;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.UUID;
 
 /**
  * 框架 Bukkit 插件主类
@@ -37,6 +36,7 @@ public final class Framework extends SubPlugin {
         logger.info("正在加载可用拓展插件...");
         loadSubPlugins("addon-plugin");
         logger.info("§f初始化完成，用时 §a"+(System.currentTimeMillis()-initTime)/1000.0+" §f秒");
+
     }
     @Override public void onDisable() {
         logger.info("开始卸载框架");

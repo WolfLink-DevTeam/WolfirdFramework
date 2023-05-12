@@ -1,11 +1,13 @@
 package org.wolflink.minecraft.wolfird.framework.jpa;
 
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 /**
  * 框架通用玩家数据
@@ -17,10 +19,12 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Entity
-//@Table(name = "common_player_data")
+@Entity
+@Table(name = "common_player_data")
 public class CommonPlayerData {
-//    @Id
-    UUID uuid;
+    @Id
+    String uuid;
+    @Column(name = "display_name")
+    String displayName;
 
 }
