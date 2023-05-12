@@ -84,7 +84,7 @@ public class BaseNotifier {
      * 自定义消息，不带任何格式
      */
     public void custom(String fullText) {
-        logger.log(Level.ALL,fullText);
+        logger.log(Level.INFO,fullText);
     }
 
     /**

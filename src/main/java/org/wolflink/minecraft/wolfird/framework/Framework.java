@@ -1,15 +1,11 @@
 package org.wolflink.minecraft.wolfird.framework;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.wolflink.minecraft.wolfird.framework.jpa.CommonPlayerData;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
 import java.io.File;
-import java.util.UUID;
 
 /**
  * 框架 Bukkit 插件主类
@@ -19,9 +15,26 @@ public final class Framework extends SubPlugin {
     @Getter private static Framework INSTANCE;
     private final BaseNotifier logger = Guice.getBean(BaseNotifier.class);
     public Framework() {
+        showBanner();
         init();
     }
     private long initTime;
+
+    private void showBanner() {
+        logger.custom("""
+
+
+
+                ██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗
+                ██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] WolfLink-DevTeam
+                ██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║
+                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] 1.0.0 - SNAPSHOT
+                ╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝
+                 ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝
+
+                """);
+    }
+
     @Override protected void init() {
         logger.info("开始初始化");
         initTime = System.currentTimeMillis();
