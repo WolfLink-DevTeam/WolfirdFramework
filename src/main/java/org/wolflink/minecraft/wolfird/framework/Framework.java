@@ -28,6 +28,10 @@ public final class Framework extends SubPlugin {
         INSTANCE = this;
         this.saveDefaultConfig();
     }
+
+    @Override
+    protected void beforeDisable() { }
+
     @Override public void onEnable() {
         logger.info("正在加载可用模式插件...");
         loadSubPlugins("mode-plugin");

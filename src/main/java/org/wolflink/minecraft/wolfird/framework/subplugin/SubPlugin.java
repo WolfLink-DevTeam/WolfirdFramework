@@ -42,4 +42,9 @@ public abstract class SubPlugin extends JavaPlugin {
      * 该方法的调用顺序应该在 onEnable 之前。
      */
     protected abstract void init();
+    /**
+     * 注销方法，向框架容器注销插件
+     * 需要在 onDisable 之前调用
+     */
+    protected abstract void beforeDisable();
 }

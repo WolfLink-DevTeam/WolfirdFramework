@@ -14,10 +14,18 @@ public abstract class ModePlugin extends SubPlugin {
     }
     @Override
     protected void init(){
-        notifier.info("正在向框架注册该拓展插件...");
+        notifier.info("正在向框架注册该模式插件...");
         ModeContainer container = getContainer();
         if(container.registerSubPlugin(info.getName(),this)) {
             notifier.info("注册完成");
         } else notifier.error("注册失败");
+    }
+    @Override
+    protected void beforeDisable() {
+        notifier.info("正在向框架注销该模式插件...");
+        ModeContainer container = getContainer();
+        if(container.unregisterSubPlugin(info.getName(),this)) {
+            notifier.info("注销完成");
+        } else notifier.error("注销失败");
     }
 }

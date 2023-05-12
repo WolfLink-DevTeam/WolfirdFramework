@@ -1,6 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.subplugin;
 
 import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
+import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
 
 /**
  * 小型玩法拓展子插件
@@ -19,6 +20,14 @@ public abstract class AddonPlugin extends SubPlugin {
         if(container.registerSubPlugin(info.getName(),this)) {
             notifier.info("注册完成");
         } else notifier.error("注册失败");
+    }
+    @Override
+    protected void beforeDisable() {
+        notifier.info("正在向框架注销该拓展插件...");
+        AddonContainer container = getContainer();
+        if(container.unregisterSubPlugin(info.getName(),this)) {
+            notifier.info("注销完成");
+        } else notifier.error("注销失败");
     }
 
 }
