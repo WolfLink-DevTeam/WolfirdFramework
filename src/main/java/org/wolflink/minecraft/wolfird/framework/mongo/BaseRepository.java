@@ -16,14 +16,16 @@ import java.util.List;
  * 实体类中至少有一个元素被 @PrimaryKey 标记
  */
 public class BaseRepository<E> {
-    private @Getter final String table;
+    private @Getter String table = null;
     private @Getter final MongoCollection<E> collection;
     private @Getter final Class<E> entityClass;
     // 主键名(主键也只允许String类型)
     private @Getter String primaryKey = null;
-    public BaseRepository(String table,Class<E> entityClass) {
-        this.table = table;
+    public BaseRepository(Class<E> entityClass) {
         this.entityClass = entityClass;
+        if(entityClass.getAnnotation(MongoTable.class) != null){
+            this.table = entityClass.getAnnotation(MongoTable.class).name();
+        }
         for (Field field : entityClass.getDeclaredFields()){
             if(field.getAnnotation(PrimaryKey.class) != null){
                 primaryKey = field.getName();

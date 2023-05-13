@@ -1,8 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
 import com.google.inject.Singleton;
-import com.mysql.cj.log.Log;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 
 import java.util.logging.Level;
