@@ -57,6 +57,7 @@ public final class Framework extends SubPlugin {
     }
     @Override public void onDisable() {
         logger.info("开始卸载框架");
+        Guice.getBean(MongoDB.class).close();
     }
 
     private void loadSubPlugins(String subPluginFolderName){
