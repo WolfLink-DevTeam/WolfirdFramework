@@ -64,19 +64,4 @@ public final class MongoDB {
         MongoCollection<Document> mongoCollection = database.getCollection(collectionName);
         consumer.accept(mongoCollection);
     }
-
-
-//    String connectionString = "mongodb://localhost:27017";
-//    CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-//    CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
-//    MongoClientSettings clientSettings = MongoClientSettings.builder()
-//            .applyConnectionString(new ConnectionString(connectionString))
-//            .codecRegistry(codecRegistry)
-//            .build();
-//        try (
-//    MongoClient mongoClient = MongoClients.create(clientSettings)) {
-//        MongoDatabase db = mongoClient.getDatabase("wolfird_db");
-//        MongoCollection<CommonPlayerData> collection = db.getCollection("player_common", CommonPlayerData.class);
-//        collection.find().forEach(System.out::println);
-//        collection.insertOne(new CommonPlayerData("1145-1419-abab",123.0));
 }
