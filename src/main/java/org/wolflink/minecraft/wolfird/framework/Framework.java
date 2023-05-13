@@ -1,6 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework;
 
 import lombok.Getter;
+import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
@@ -43,7 +44,7 @@ public final class Framework extends SubPlugin {
     }
 
     @Override
-    protected void beforeDisable() { }
+    protected void beforeDisable() { throw new NotImplementedException(); }
 
     @Override public void onEnable() {
         logger.info("正在加载可用模式插件...");
