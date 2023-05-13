@@ -2,6 +2,7 @@ package org.wolflink.minecraft.wolfird.framework;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Injector;
+import com.google.inject.name.Names;
 
 public final class Guice {
 
