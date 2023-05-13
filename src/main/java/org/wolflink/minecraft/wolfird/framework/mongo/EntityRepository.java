@@ -15,13 +15,13 @@ import java.util.List;
  * 实体仓库，提供基本的增删改查方法
  * 实体类中至少有一个元素被 @PrimaryKey 标记
  */
-public class BaseRepository<E> {
+public class EntityRepository<E> {
     private @Getter String table = null;
     private @Getter final MongoCollection<E> collection;
     private @Getter final Class<E> entityClass;
     // 主键名(主键也只允许String类型)
     private @Getter String primaryKey = null;
-    public BaseRepository(Class<E> entityClass) {
+    public EntityRepository(Class<E> entityClass) {
         this.entityClass = entityClass;
         if(entityClass.getAnnotation(MongoTable.class) != null){
             this.table = entityClass.getAnnotation(MongoTable.class).name();
