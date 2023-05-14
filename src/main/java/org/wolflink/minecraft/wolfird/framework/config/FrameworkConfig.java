@@ -1,7 +1,10 @@
 package org.wolflink.minecraft.wolfird.framework.config;
 
 import com.google.inject.Singleton;
+import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.mongo.DocumentRepository;
+import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
+import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +31,8 @@ public class FrameworkConfig {
      * 加载运行时配置
      */
     public void load(){
+        Guice.getBean(BaseNotifier.class).info("正在从 MongoDB 中加载配置文件...");
+        TimingUtil.start("config_load");
         for (ConfigProjection configNode : ConfigProjection.values()) {
             runtimeConfigs.put(
                     configNode,
@@ -38,12 +43,15 @@ public class FrameworkConfig {
                     )
             );
         }
+        Guice.getBean(BaseNotifier.class).info("§f配置文件加载完成，用时 §a"+TimingUtil.finish("config_load")/1000.0+"§f 秒");
     }
 
     /**
      * 保存运行时配置
      */
     public void save(){
+        Guice.getBean(BaseNotifier.class).info("正在向 MongoDB 中保存配置文件...");
+        TimingUtil.start("config_save");
         for (Map.Entry<ConfigProjection,Object> entry : runtimeConfigs.entrySet()) {
             documentRepo.updateValue(
                     entry.getKey().getDocumentName(),
@@ -51,5 +59,6 @@ public class FrameworkConfig {
                     entry.getValue()
             );
         }
+        Guice.getBean(BaseNotifier.class).info("§f配置文件保存完成，用时 §a"+TimingUtil.finish("config_save")/1000.0+"§f 秒");
     }
 }

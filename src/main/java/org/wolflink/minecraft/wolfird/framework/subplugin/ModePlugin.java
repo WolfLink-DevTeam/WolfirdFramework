@@ -1,6 +1,5 @@
 package org.wolflink.minecraft.wolfird.framework.subplugin;
 
-import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
 import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
 
 /**

@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
+import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
 import java.io.File;
 
@@ -39,7 +40,7 @@ public final class Framework extends SubPlugin {
 
     @Override protected void init() {
         logger.info("开始初始化");
-        initTime = System.currentTimeMillis();
+        TimingUtil.start("framework_init");
         INSTANCE = this;
         // 加载配置文件
         Guice.getBean(FrameworkConfig.class).load();
@@ -51,7 +52,7 @@ public final class Framework extends SubPlugin {
         loadSubPlugins("system-plugin");
         logger.info("正在加载可用拓展插件...");
         loadSubPlugins("addon-plugin");
-        logger.info("§f初始化完成，用时 §a"+(System.currentTimeMillis()-initTime)/1000.0+" §f秒");
+        logger.info("§f初始化完成，用时 §a"+TimingUtil.finish("framework_init")/1000.0+" §f秒");
 
     }
     @Override
@@ -60,6 +61,7 @@ public final class Framework extends SubPlugin {
         Guice.getBean(FrameworkConfig.class).save();
     }
     @Override public void onDisable() {
+        beforeDisable();
         logger.info("开始卸载框架");
         Guice.getBean(MongoDB.class).close();
     }
