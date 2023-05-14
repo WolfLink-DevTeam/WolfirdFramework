@@ -18,11 +18,6 @@ import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
  */
 @SuppressWarnings("Do not inherit this class,it's just used for framework.")
 public abstract class SubPlugin extends JavaPlugin {
-    MongoDB hibernate = null;
-    public MongoDB getHibernate() {
-        if(hibernate == null)hibernate = new MongoDB();
-        return hibernate;
-    }
     /**
      * 插件描述信息，详见 plugin.yml
      */

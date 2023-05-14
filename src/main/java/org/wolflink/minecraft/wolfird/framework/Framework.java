@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework;
 
+import com.google.inject.Inject;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
@@ -17,7 +18,8 @@ import java.io.File;
 public final class Framework extends SubPlugin {
 
     @Getter private static Framework INSTANCE;
-    private final BaseNotifier logger = Guice.getBean(BaseNotifier.class);
+    @Inject
+    private BaseNotifier logger;
     public Framework() {
         showBanner();
         init();
