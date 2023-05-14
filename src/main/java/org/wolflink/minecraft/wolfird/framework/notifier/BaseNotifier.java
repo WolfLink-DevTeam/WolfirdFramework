@@ -1,7 +1,10 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
 import com.google.inject.Singleton;
+import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +25,7 @@ public class BaseNotifier {
     private final String consoleTemplate;
     private final String chatTemplate;
     private final String notifyTemplate;
-    private final String prefix;
+    private final @Getter String prefix;
     public BaseNotifier() {
         this("§9Wolfird",
                 "§8[{prefix}§7|{level}§8] §r{msg}",
@@ -95,7 +98,12 @@ public class BaseNotifier {
         Bukkit.broadcastMessage(text);
         logger.log(Level.INFO,text);
     }
-
+    public void chat(String msg, Player p) {
+        String text = chatTemplate
+                .replace("{prefix}",prefix)
+                .replace("{msg}",msg);
+        p.sendMessage(text);
+    }
     /**
      * 重要消息通知，会占用较多显示区域，
      * 同时发送给聊天栏和后台
@@ -106,6 +114,18 @@ public class BaseNotifier {
                 .replace("{msg}",msg);
         Bukkit.broadcastMessage(text);
         logger.log(Level.INFO,text);
+    }
+    public void notify(String msg,Player p) {
+        String text = notifyTemplate
+                .replace("{prefix}",prefix)
+                .replace("{msg}",msg);
+        p.sendMessage(text);
+    }
+    public void cmdResult(String msg,CommandSender sender) {
+        String text = notifyTemplate
+                .replace("{prefix}",prefix)
+                .replace("{msg}",msg);
+        sender.sendMessage(text);
     }
 
     /**
