@@ -6,10 +6,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
-import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
-import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
-import org.wolflink.minecraft.wolfird.framework.container.SubPluginContainer;
-import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
+import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
+import org.wolflink.minecraft.wolfird.framework.container.*;
 import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
 
 /**
@@ -35,6 +33,19 @@ public abstract class SubPlugin extends JavaPlugin {
         else if(this instanceof ModePlugin) return (T) Guice.getBean(ModeContainer.class);
         else if(this instanceof SystemPlugin) return (T) Guice.getBean(SystemContainer.class);
         return null;
+    }
+
+    /**
+     * 向框架中注册指令
+     */
+    public void registerCommand(WolfirdCommand command) {
+        Guice.getBean(CommandContainer.class).registerCommand(command);
+    }
+    /**
+     * 向框架中取消注册指令
+     */
+    public void unregisterCommand(WolfirdCommand command) {
+        Guice.getBean(CommandContainer.class).registerCommand(command);
     }
 
     /**
