@@ -54,13 +54,21 @@ public abstract class WolfirdCommand {
         BaseNotifier notifier = Guice.getBean(BaseNotifier.class);
         if(sender instanceof ConsoleCommandSender) {
             if(allowConsoleSender) execute(sender);
-            else notifier.cmdResult("该指令不允许以控制台身份执行。",sender);
+            else {
+                notifier.cmdResult("该指令不允许以控制台身份执行。",sender);
+                return;
+            }
         }
-        if(!allowPlayerSender) notifier.cmdResult("该指令不允许以玩家身份执行。",sender);
+        if(!allowPlayerSender) {
+            notifier.cmdResult("该指令不允许以玩家身份执行。",sender);
+            return;
+        }
         if(requirePerm) {
             if(sender.hasPermission(permission)) {
                 execute(sender);
-            } else notifier.cmdResult("权限不足，需要以下权限："+permission,sender);
+            } else {
+                notifier.cmdResult("权限不足，需要以下权限："+permission,sender);
+            }
         } else execute(sender);
     }
     protected abstract void execute(CommandSender sender);
