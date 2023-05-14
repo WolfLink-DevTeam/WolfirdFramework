@@ -14,6 +14,7 @@ import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 public class WolfirdCommandExecutor implements CommandExecutor {
     @Inject
     BaseNotifier notifier;
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         CommandContainer commandContainer = Guice.getBean(CommandContainer.class);

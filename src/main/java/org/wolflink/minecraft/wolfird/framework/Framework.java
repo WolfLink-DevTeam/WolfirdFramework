@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
+import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
@@ -54,6 +55,7 @@ public final class Framework extends SubPlugin {
         loadSubPlugins("addon-plugin");
         logger.info("§f初始化完成，用时 §a"+TimingUtil.finish("framework_init")/1000.0+" §f秒");
         Bukkit.getPluginCommand("wolfird").setExecutor(Guice.getBean(WolfirdCommandExecutor.class));
+        Guice.getBean(CommandContainer.class).registerCommands();
     }
     @Override
     protected void beforeDisable() {

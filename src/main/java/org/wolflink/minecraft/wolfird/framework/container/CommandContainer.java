@@ -16,10 +16,7 @@ public class CommandContainer {
      * 匹配的时候直接异步遍历匹配然后执行(指令数应该不超过100条，性能影响很小)
      */
     private final @Getter Set<WolfirdCommand> commands = new HashSet<>();
-    public void registerCommand(WolfirdCommand wolfirdCommand) {
-        commands.add(wolfirdCommand);
-    }
-    public CommandContainer() {
+    public void registerCommands() {
         commands.add(Guice.getBean(CmdHelp.class));
     }
     /**
