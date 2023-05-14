@@ -3,7 +3,6 @@ package org.wolflink.minecraft.wolfird.framework.command;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.bukkit.command.CommandSender;
-import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;

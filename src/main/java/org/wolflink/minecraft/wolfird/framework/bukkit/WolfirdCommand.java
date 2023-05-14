@@ -30,8 +30,13 @@ public abstract class WolfirdCommand {
      * 权限 wolfird.moduleName.help.helpArgs
      */
     private @Getter final String commandTemplate;
-
+    /**
+     * 将 commandTemplate 以空格分隔为字符串数组
+     */
     private @Getter final String[] commandArgs;
+    /**
+     * 指令的帮助信息
+     */
     private @Getter final String helpMessage;
     public WolfirdCommand(
             boolean requirePerm,
@@ -50,6 +55,10 @@ public abstract class WolfirdCommand {
         permission = permission.replace("{","");
         permission = permission.replace("}","");
     }
+
+    /**
+     * 尝试执行指令，会检查执行者身份、权限
+     */
     public void tryExecute(CommandSender sender) {
         BaseNotifier notifier = Guice.getBean(BaseNotifier.class);
         if(sender instanceof ConsoleCommandSender) {
@@ -71,5 +80,9 @@ public abstract class WolfirdCommand {
             }
         } else execute(sender);
     }
+
+    /**
+     * 强制执行指令，无视检查
+     */
     protected abstract void execute(CommandSender sender);
 }

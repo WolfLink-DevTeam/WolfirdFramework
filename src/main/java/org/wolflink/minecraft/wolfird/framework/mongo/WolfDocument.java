@@ -3,6 +3,11 @@ package org.wolflink.minecraft.wolfird.framework.mongo;
 import com.mongodb.lang.Nullable;
 import org.bson.Document;
 
+/**
+ * 封装文档类
+ * 提供了根据路径插入值和根据路径查询值的方法
+ * 在与MongoDB互相操作时需要调用 toDocument() 方法转换为 Document 类型
+ */
 public class WolfDocument {
 
     private Document thisDoc = new Document();

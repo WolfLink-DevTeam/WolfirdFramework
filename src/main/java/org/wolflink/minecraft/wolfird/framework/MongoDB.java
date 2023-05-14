@@ -22,6 +22,7 @@ public final class MongoDB {
     MongoClient client;
     @Getter
     MongoDatabase database;
+    // TODO 数据库的连接信息应该从其他地方修改，现在是存放在数据库中的，但是不配置好连接信息又连不上数据库
     public MongoDB() {
         this("mongodb://localhost:27017/","wolfird_db");
     }

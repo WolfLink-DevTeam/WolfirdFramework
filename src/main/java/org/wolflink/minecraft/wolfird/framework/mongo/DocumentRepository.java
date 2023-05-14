@@ -8,6 +8,9 @@ import org.bson.Document;
 import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
 
+/**
+ * 结构不规则的文档仓库
+ */
 public class DocumentRepository {
     private @Getter final String table;
     private @Getter final MongoCollection<Document> collection;

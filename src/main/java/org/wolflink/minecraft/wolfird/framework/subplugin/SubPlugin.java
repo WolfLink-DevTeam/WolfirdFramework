@@ -35,6 +35,7 @@ public abstract class SubPlugin extends JavaPlugin {
         return null;
     }
 
+    // TODO 应该再弄个列表存储某个子插件注册的所有指令，在插件卸载时把那些指令全部注销
     /**
      * 向框架中注册指令
      */

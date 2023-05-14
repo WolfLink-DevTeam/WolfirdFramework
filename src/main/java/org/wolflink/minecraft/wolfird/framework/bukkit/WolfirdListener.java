@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+// TODO 还应该提供对 SchedulerTask 相关的封装，否则在监听器禁用时这些任务仍在执行，不符合逻辑
 public class WolfirdListener implements Listener {
 
     private boolean enabled = false;

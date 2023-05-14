@@ -16,14 +16,12 @@ public class CommandContainer {
      * 匹配的时候直接异步遍历匹配然后执行(指令数应该不超过100条，性能影响很小)
      */
     private final @Getter Set<WolfirdCommand> commands = new HashSet<>();
-
     /**
      * 单独注册指令，一般是提供给子插件调用
      */
     public void registerCommand(WolfirdCommand command) {
         commands.add(command);
     }
-
     /**
      * 单独注销指令，一般是提供给子插件调用
      */
