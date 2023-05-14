@@ -26,7 +26,6 @@ public class WolfDocument {
      */
     @Nullable
     public Object putByPath(final String path, final Object value) {
-        System.out.println("putByPath - "+path+"|"+value);
         String[] pathArgs = path.split("\\.");
         String lastArg = pathArgs[pathArgs.length-1];
         Document nowDocument = thisDoc;
