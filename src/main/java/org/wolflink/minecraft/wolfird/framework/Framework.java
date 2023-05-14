@@ -18,8 +18,8 @@ import java.io.File;
 public final class Framework extends SubPlugin {
 
     @Getter private static Framework INSTANCE;
-    @Inject
-    private BaseNotifier logger;
+
+    private final BaseNotifier logger = Guice.getBean(BaseNotifier.class);
     public Framework() {
         showBanner();
         init();
@@ -45,8 +45,10 @@ public final class Framework extends SubPlugin {
         logger.info("开始初始化");
         TimingUtil.start("framework_init");
         INSTANCE = this;
+        this.saveDefaultConfig();
         // 加载配置文件
         Guice.getBean(FrameworkConfig.class).load();
+        Guice.getBean(MongoDB.class).setError(false);
     }
     @Override public void onEnable() {
         logger.info("正在加载可用模式插件...");
@@ -65,6 +67,7 @@ public final class Framework extends SubPlugin {
         Guice.getBean(FrameworkConfig.class).save();
     }
     @Override public void onDisable() {
+        if(Guice.getBean(MongoDB.class).isError())return;
         beforeDisable();
         logger.info("开始卸载框架");
         Guice.getBean(MongoDB.class).close();
