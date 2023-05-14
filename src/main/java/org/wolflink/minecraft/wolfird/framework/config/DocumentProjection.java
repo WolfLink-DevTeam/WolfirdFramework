@@ -1,7 +1,19 @@
 package org.wolflink.minecraft.wolfird.framework.config;
 
+import org.wolflink.minecraft.wolfird.framework.utils.StringUtil;
+
+/**
+ * 文档名称投影
+ */
 public enum DocumentProjection {
     FRAMEWORK,SOME_OTHER
     ;
-    //TODO 可以加个下划线转小驼峰的算法，但别加在这里
+
+    /**
+     * 转小驼峰
+     */
+    @Override
+    public String toString() {
+        return StringUtil.underline2SmallHump(name());
+    }
 }

@@ -3,6 +3,7 @@ package org.wolflink.minecraft.wolfird.framework;
 import lombok.Getter;
 import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.Bukkit;
+import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
@@ -40,12 +41,9 @@ public final class Framework extends SubPlugin {
         logger.info("开始初始化");
         initTime = System.currentTimeMillis();
         INSTANCE = this;
-        this.saveDefaultConfig();
+        // 加载配置文件
+        Guice.getBean(FrameworkConfig.class).load();
     }
-
-    @Override
-    protected void beforeDisable() { throw new NotImplementedException(); }
-
     @Override public void onEnable() {
         logger.info("正在加载可用模式插件...");
         loadSubPlugins("mode-plugin");
@@ -55,6 +53,11 @@ public final class Framework extends SubPlugin {
         loadSubPlugins("addon-plugin");
         logger.info("§f初始化完成，用时 §a"+(System.currentTimeMillis()-initTime)/1000.0+" §f秒");
 
+    }
+    @Override
+    protected void beforeDisable() {
+        // 保存配置文件
+        Guice.getBean(FrameworkConfig.class).save();
     }
     @Override public void onDisable() {
         logger.info("开始卸载框架");
