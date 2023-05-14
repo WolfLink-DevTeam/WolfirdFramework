@@ -48,7 +48,7 @@ public class DocumentRepository {
     public void updateValue(String documentName,String path,Object value){
         WolfDocument wolfDocument = findByDocumentName(documentName);
         wolfDocument.putByPath(path,value);
-        collection.updateOne(new Document("documentName",documentName),wolfDocument.toDocument());
+        collection.updateOne(new Document("documentName",documentName),new Document("$set",wolfDocument.toDocument()));
     }
 
     /**
@@ -67,6 +67,7 @@ public class DocumentRepository {
         if(result == null) {
             wolfDocument.putByPath(path,defaultValue);
             result = defaultValue;
+            collection.updateOne(new Document("documentName",documentName),new Document("$set",wolfDocument.toDocument()));
         }
         return result;
     }
