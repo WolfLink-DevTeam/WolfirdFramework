@@ -2,6 +2,7 @@
 ![开源协议](https://img.shields.io/github/license/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
+[![Stargazers over time](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework.svg)](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework)
 ### 简介
 这是一个面向敏捷开发的 Minecraft Bukkit 插件玩法开发框架，集成了 MongoDB 和 Google Guice，并对Bukkit提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
 
@@ -59,10 +60,11 @@ public class CmdHelp extends WolfirdCommand {
         sender.sendMessage(" ");
     }
 }
+CmdHelp cmdHelpInstance = new CmdHelp();
 // 注册指令
-MyPlugin.getInstance().registerCommand(new CmdHelp());
+MyPlugin.getInstance().registerCommand(cmdHelpInstance);
 // 取消注册指令
-MyPlugin.getInstance().unregisterCommand(new CmdHelp());
+MyPlugin.getInstance().unregisterCommand(cmdHelpInstance);
 ```
 ### 配置文件
 主要的配置文件都是存放在 MongoDB 中的，开发者需要创建子插件独立的配置文件时只需要继承 BaseConfig 类并创建单例，之后需要给定默认配置清单，包括配置路径、配置值，然后就可以调用封装好的 load() update() save() 方法便捷完成配置文件的修改和持久化操作。
