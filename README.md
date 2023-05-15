@@ -1,6 +1,12 @@
 # Wolfird - 简洁规范的玩法开发框架
+![开源协议](https://img.shields.io/github/license/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
+![Stars](https://img.shields.io/github/stars/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
+![Last Commit](https://img.shields.io/github/last-commit/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
+### 简介
+这是一个面向敏捷开发的 Minecraft Bukkit 插件玩法开发框架，集成了 MongoDB 和 Google Guice，并对Bukkit提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
+
 ### 主类
-子插件主类不再直接继承 JavaPlugin，而是从 AddonPluign、ModePlugin、SystemPlugin 中选择一个进行集成。
+子插件主类不再直接继承 JavaPlugin，而是从 AddonPlugin、ModePlugin、SystemPlugin 中选择一个继承。
 AddonPlugin 描述的是一个小功能拓展插件；ModePlugin 描述的是一个游戏模式拓展插件，例如 UHC 模式、猎人游戏模式等；SystemPlugin 描述逇一个大型玩法系统拓展插件。
 ```java
 // 这是一个示例模块插件的主类
