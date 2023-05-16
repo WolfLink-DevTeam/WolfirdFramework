@@ -2,7 +2,7 @@
 ![开源协议](https://img.shields.io/github/license/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
-[![Stargazers over time](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework.svg)](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework)
+[![Star History Chart](https://api.star-history.com/svg?repos=WolfLink-DevTeam/WolfirdFramework&type=Date)](https://star-history.com/#WolfLink-DevTeam/WolfirdFramework&Date)
 ### 简介
 这是一个面向敏捷开发的 Minecraft Bukkit 插件玩法开发框架，集成了 MongoDB 和 Google Guice，并对Bukkit提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
 ### 主类
