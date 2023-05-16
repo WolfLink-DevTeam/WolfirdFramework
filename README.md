@@ -5,7 +5,6 @@
 [![Stargazers over time](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework.svg)](https://starchart.cc/WolfLink-DevTeam/WolfirdFramework)
 ### 简介
 这是一个面向敏捷开发的 Minecraft Bukkit 插件玩法开发框架，集成了 MongoDB 和 Google Guice，并对Bukkit提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
-
 ### 主类
 子插件主类不再直接继承 JavaPlugin，而是从 AddonPlugin、ModePlugin、SystemPlugin 中选择一个继承。
 AddonPlugin 描述的是一个小功能拓展插件；ModePlugin 描述的是一个游戏模式拓展插件，例如 UHC 模式、猎人游戏模式等；SystemPlugin 描述逇一个大型玩法系统拓展插件。
@@ -15,11 +14,10 @@ public final class WolfirdTestAddon1 extends AddonPlugin {
 	// 具体方法...
 }
 ```
-### 事件监听器(还不够完善)
+### 事件监听器
 不再需要直接实现 Listener 接口，而是继承 WolfirdListener 抽象类。
-WolfirdListener 提供了比Bukkit封装的Listener更加方便的注册和取消注册的方式，只需要通过setEnabled改变其状态即可，另外事件监听方法仍然需要使用 @EventHandler 进行标注。
-可能存在的问题：
-在事件监听器生效期间创建 BukkitTask 延迟任务，在任务未生效前监听器被注销，此时任务仍未被注销。
+WolfirdListener 提供了比 Bukkit 封装的 Listener 更加方便的注册和取消注册的方式，只需要通过 setEnabled 改变其状态即可，另外事件监听方法仍然需要使用 @EventHandler 进行标注。
+如果需要在监听器中使用调度器执行延迟任务或周期任务等，请不要使用 Bukkit.getScheduler().runTask() 等方法，而是使用 WolfirdListener 内封装的相关方法。
 ```java
 // 这是一个示例事件监听器
 public class TestListener extends WolfirdListener {
@@ -89,4 +87,3 @@ EntityRepository<TestEntity> repo = new EntityRepository<>(TestEntity.class);
 ```
 ### 日志
 提供了便捷的 SubPluginNotifier 封装，继承自 BaseNotifier，前缀名称通过 plugin.yml 中的 prefix 配置项进行设置，可以带有颜色，如 §9Wolfird。通过子插件主类的 notifier 成员变量获取消息通知器。
-

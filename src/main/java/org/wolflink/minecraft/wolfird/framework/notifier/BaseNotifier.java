@@ -1,10 +1,14 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
-import com.google.inject.Singleton;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
+import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,43 +22,38 @@ import java.util.logging.Logger;
  * 例如：
  * [Wolfird|信息] abab
  */
-@Singleton
-public class BaseNotifier {
+public abstract class BaseNotifier {
     private final Logger logger = Bukkit.getLogger();
-    private boolean debugMode = false;
-    private final String consoleTemplate;
+    private @Setter boolean debugMode = false;
+    private final boolean colorfulConsole;
+    private static final String consoleColorFilter = "§[0-9a-fk-or]";
+    private String consoleTemplate;
     private final String chatTemplate;
     private final String notifyTemplate;
-    private final @Getter String prefix;
-    public BaseNotifier() {
-        this("§9Wolfird",
-                "§8[{prefix}§7|{level}§8] §r{msg}",
-                "§8[ {prefix} §8] §f›§7›§8› §r{msg}",
-                "\n§8[ {prefix} §8] §f›§7›§8› \n\n§r{msg}\n\n"
+    private @Setter @Getter String prefix;
+    public BaseNotifier(String prefix) {
+        this(prefix,
+                IOC.getBean(FrameworkConfig.class).get(ConfigProjection.NOTIFIER_CONSOLE_TEMPLATE),
+                IOC.getBean(FrameworkConfig.class).get(ConfigProjection.NOTIFIER_CHAT_TEMPLATE),
+                IOC.getBean(FrameworkConfig.class).get(ConfigProjection.NOTIFIER_NOTIFY_TEMPLATE),
+                IOC.getBean(FrameworkConfig.class).get(ConfigProjection.NOTIFIER_COLORFUL_CONSOLE)
         );
     }
-    public BaseNotifier(String prefix,String consoleTemplate,String chatTemplate,String notifyTemplate) {
+    public BaseNotifier(String prefix,String consoleTemplate,String chatTemplate,String notifyTemplate,boolean colorfulConsole) {
         this.prefix = prefix;
         this.consoleTemplate = consoleTemplate;
         this.chatTemplate = chatTemplate;
         this.notifyTemplate = notifyTemplate;
+        this.colorfulConsole = colorfulConsole;
+        if(!colorfulConsole) this.consoleTemplate = consoleTemplate.replaceAll(consoleColorFilter,"");
     }
-
-    /**
-     * 切换 DEBUG 模式
-     * @return 改变后 DEBUG 模式是否启用
-     */
-    public boolean toggleDebug() {
-        debugMode = !debugMode;
-        return debugMode;
-    }
-
     public void debug(String msg) {
         if(! debugMode) return;
         String text = consoleTemplate
                 .replace("{prefix}",prefix)
                 .replace("{level}","§e调试")
                 .replace("{msg}","§e"+msg);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.WARNING,text);
     }
     public void info(String msg) {
@@ -62,6 +61,7 @@ public class BaseNotifier {
                 .replace("{prefix}",prefix)
                 .replace("{level}","§b信息")
                 .replace("{msg}",msg);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.INFO,text);
     }
 
@@ -70,6 +70,7 @@ public class BaseNotifier {
                 .replace("{prefix}",prefix)
                 .replace("{level}","§e警告")
                 .replace("{msg}","§e"+msg);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.WARNING,text);
     }
 
@@ -78,6 +79,7 @@ public class BaseNotifier {
                 .replace("{prefix}",prefix)
                 .replace("{level}","§c错误")
                 .replace("{msg}","§c"+msg);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.SEVERE,text);
     }
 
@@ -96,6 +98,7 @@ public class BaseNotifier {
                 .replace("{prefix}",prefix)
                 .replace("{msg}",msg);
         Bukkit.broadcastMessage(text);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.INFO,text);
     }
     public void chat(String msg, Player p) {
@@ -113,6 +116,7 @@ public class BaseNotifier {
                 .replace("{prefix}",prefix)
                 .replace("{msg}",msg);
         Bukkit.broadcastMessage(text);
+        if(!colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         logger.log(Level.INFO,text);
     }
     public void notify(String msg,Player p) {
@@ -125,6 +129,7 @@ public class BaseNotifier {
         String text = notifyTemplate
                 .replace("{prefix}",prefix)
                 .replace("{msg}",msg);
+        if(sender instanceof ConsoleCommandSender && !colorfulConsole)text = text.replaceAll(consoleColorFilter,"");
         sender.sendMessage(text);
     }
 
@@ -136,7 +141,7 @@ public class BaseNotifier {
         chat("这是聊天信息");
         notify("这是醒目信息");
         debug("这是调试信息1");
-        toggleDebug();
+        debugMode = true;
         debug("这是调试信息2");
         info("这是普通信息");
         warn("这是警告信息");

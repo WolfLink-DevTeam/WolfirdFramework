@@ -1,10 +1,10 @@
 package org.wolflink.minecraft.wolfird.framework.container;
 
-import com.google.inject.Singleton;
 import lombok.Getter;
-import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.command.CmdHelp;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +32,7 @@ public class CommandContainer {
      * 初始化框架的所有指令
      */
     public void registerCommands() {
-        commands.add(Guice.getBean(CmdHelp.class));
+        commands.add(IOC.getBean(CmdHelp.class));
     }
     /**
      * 寻找最佳匹配指令

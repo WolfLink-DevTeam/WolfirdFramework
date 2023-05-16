@@ -5,8 +5,8 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.lang.NonNull;
 import lombok.Getter;
 import org.bson.Document;
-import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 
 /**
  * 结构不规则的文档仓库
@@ -17,7 +17,7 @@ public class DocumentRepository {
 
     public DocumentRepository(String table) {
         this.table = table;
-        collection = Guice.getBean(MongoDB.class).getDatabase().getCollection(table);
+        collection = IOC.getBean(MongoDB.class).getDatabase().getCollection(table);
         collection.createIndex(new Document("documentName",1), new IndexOptions().unique(true));
     }
 

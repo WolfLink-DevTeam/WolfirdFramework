@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum ConfigProjection {
     MONGO_URL("mongo.connectionUrl","mongodb://localhost:27017/"),
     MONGO_DB_NAME("mongo.databaseName","wolfird_db"),
+    NOTIFIER_COLORFUL_CONSOLE("notifier.colorful_console",true),
     NOTIFIER_CONSOLE_TEMPLATE("notifier.template.console","§8[{prefix}§7|{level}§8] §r{msg}"),
     NOTIFIER_CHAT_TEMPLATE("notifier.template.chat","§8[ {prefix} §8] §f›§7›§8› §r{msg}"),
     NOTIFIER_NOTIFY_TEMPLATE("notifier.template.notify","\n§8[ {prefix} §8] §f›§7›§8› \n\n§r{msg}\n\n"),

@@ -1,16 +1,17 @@
 package org.wolflink.minecraft.wolfird.framework.command;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+
 import org.bukkit.command.CommandSender;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
-import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
+import org.wolflink.minecraft.wolfird.framework.ioc.Inject;
+import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 
 @Singleton
 public class CmdHelp extends WolfirdCommand {
     @Inject
-    private BaseNotifier notifier;
+    private FrameworkNotifier notifier;
     @Inject
     private CommandContainer commandContainer;
     public CmdHelp() {

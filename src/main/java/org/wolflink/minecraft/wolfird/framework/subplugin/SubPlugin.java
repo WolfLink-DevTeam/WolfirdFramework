@@ -4,10 +4,9 @@ package org.wolflink.minecraft.wolfird.framework.subplugin;
 import lombok.Getter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.wolflink.minecraft.wolfird.framework.Guice;
-import org.wolflink.minecraft.wolfird.framework.MongoDB;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.*;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
 
 /**
@@ -29,9 +28,9 @@ public abstract class SubPlugin extends JavaPlugin {
     }
 
     public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){
-        if(this instanceof AddonPlugin) return (T) Guice.getBean(AddonContainer.class);
-        else if(this instanceof ModePlugin) return (T) Guice.getBean(ModeContainer.class);
-        else if(this instanceof SystemPlugin) return (T) Guice.getBean(SystemContainer.class);
+        if(this instanceof AddonPlugin) return (T) IOC.getBean(AddonContainer.class);
+        else if(this instanceof ModePlugin) return (T) IOC.getBean(ModeContainer.class);
+        else if(this instanceof SystemPlugin) return (T) IOC.getBean(SystemContainer.class);
         return null;
     }
 
@@ -40,13 +39,13 @@ public abstract class SubPlugin extends JavaPlugin {
      * 向框架中注册指令
      */
     public void registerCommand(WolfirdCommand command) {
-        Guice.getBean(CommandContainer.class).registerCommand(command);
+        IOC.getBean(CommandContainer.class).registerCommand(command);
     }
     /**
      * 向框架中取消注册指令
      */
     public void unregisterCommand(WolfirdCommand command) {
-        Guice.getBean(CommandContainer.class).registerCommand(command);
+        IOC.getBean(CommandContainer.class).registerCommand(command);
     }
 
     /**

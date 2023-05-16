@@ -3,8 +3,10 @@ package org.wolflink.minecraft.wolfird.framework.bukkit;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.wolflink.minecraft.wolfird.framework.Guice;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
+import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
+
 public abstract class WolfirdCommand {
     /**
      * 是否需要权限 如果需要则会自动注册权限
@@ -60,7 +62,7 @@ public abstract class WolfirdCommand {
      * 尝试执行指令，会检查执行者身份、权限
      */
     public void tryExecute(CommandSender sender) {
-        BaseNotifier notifier = Guice.getBean(BaseNotifier.class);
+        BaseNotifier notifier = IOC.getBean(FrameworkNotifier.class);
         if(sender instanceof ConsoleCommandSender) {
             if(allowConsoleSender) execute(sender);
             else {

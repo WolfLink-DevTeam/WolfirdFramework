@@ -5,8 +5,8 @@ import com.mongodb.client.model.IndexOptions;
 import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import org.bson.Document;
-import org.wolflink.minecraft.wolfird.framework.Guice;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -33,7 +33,7 @@ public class EntityRepository<E> {
             }
         }
         if(primaryKey == null)throw new IllegalArgumentException("实体类中没有用 @PrimaryKey 注解标记主键");
-        collection = Guice.getBean(MongoDB.class).getDatabase().getCollection(table,entityClass);
+        collection = IOC.getBean(MongoDB.class).getDatabase().getCollection(table,entityClass);
         collection.createIndex(new Document(primaryKey,1), new IndexOptions().unique(true));
     }
     @Nullable

@@ -1,6 +1,5 @@
 package org.wolflink.minecraft.wolfird.framework;
 
-import com.google.inject.Singleton;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
@@ -12,9 +11,11 @@ import lombok.Setter;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
+import org.bukkit.Bukkit;
+import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
 
 import java.util.function.Consumer;
+import java.util.logging.Level;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -27,11 +28,10 @@ public final class MongoDB {
     MongoClient client;
     @Getter
     MongoDatabase database;
-    // TODO 数据库的连接信息应该从其他地方修改，现在是存放在数据库中的，但是不配置好连接信息又连不上数据库
     public MongoDB() {
         this(
-                Framework.getINSTANCE().getConfig().getString("mongo_connection_url"),
-                Framework.getINSTANCE().getConfig().getString("mongo_database_name")
+                Framework.getInstance().getConfig().getString("mongo_connection_url"),
+                Framework.getInstance().getConfig().getString("mongo_database_name")
         );
     }
     private MongoDB(String connectionUrl,String databaseName) {
@@ -40,7 +40,7 @@ public final class MongoDB {
             try {
                 Thread.sleep(1000 * 10);
                 if(!error)return;
-                Guice.getBean(BaseNotifier.class).error("无法创建数据库连接，请前往 config/WolfirdFramework/config.yml 修改相关配置");
+                Bukkit.getLogger().log(Level.SEVERE,"无法创建数据库连接，请前往 config/WolfirdFramework/config.yml 修改相关配置");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

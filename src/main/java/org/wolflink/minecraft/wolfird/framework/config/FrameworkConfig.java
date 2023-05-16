@@ -1,6 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.config;
 
-import com.google.inject.Singleton;
+
+import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
 
 @Singleton
 public class FrameworkConfig extends BaseConfig{

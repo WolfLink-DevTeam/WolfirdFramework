@@ -21,16 +21,16 @@ public abstract class WolfirdListener implements Listener {
      */
     private final Set<Integer> taskIdSet = new HashSet<>();
     public void runTaskLater(Runnable runnable,long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getINSTANCE(),runnable,delay).getTaskId());
+        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getInstance(),runnable,delay).getTaskId());
     }
     public void runTaskLaterAsync(Runnable runnable,long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getINSTANCE(),runnable,delay).getTaskId());
+        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(),runnable,delay).getTaskId());
     }
     public void runTaskTimer(Runnable runnable,long delay,long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getINSTANCE(),runnable,delay,period).getTaskId());
+        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getInstance(),runnable,delay,period).getTaskId());
     }
     public void runTaskTimerAsync(Runnable runnable,long delay,long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getINSTANCE(),runnable,delay,period).getTaskId());
+        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(),runnable,delay,period).getTaskId());
     }
 
     public void setEnabled(final boolean enabled) {
@@ -38,7 +38,7 @@ public abstract class WolfirdListener implements Listener {
         this.enabled = enabled;
         // 从禁用到启用
         if(enabled) {
-            Bukkit.getPluginManager().registerEvents(this, Framework.getINSTANCE());
+            Bukkit.getPluginManager().registerEvents(this, Framework.getInstance());
         }
         // 从启用到禁用
         else {
