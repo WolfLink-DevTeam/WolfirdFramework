@@ -86,11 +86,13 @@ public abstract class WolfirdCommand {
             args[i] = commandParts[placeholderIndexes[i]];
         }
         if(sender instanceof ConsoleCommandSender) {
-            if(allowConsoleSender) execute(sender,args);
+            if(allowConsoleSender) {
+                execute(sender,args);
+            }
             else {
                 notifier.cmdResult("该指令不允许以控制台身份执行。",sender);
-                return;
             }
+            return;
         }
         if(!allowPlayerSender) {
             notifier.cmdResult("该指令不允许以玩家身份执行。",sender);

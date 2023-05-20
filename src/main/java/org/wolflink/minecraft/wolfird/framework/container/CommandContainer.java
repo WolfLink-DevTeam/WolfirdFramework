@@ -3,6 +3,7 @@ package org.wolflink.minecraft.wolfird.framework.container;
 import lombok.Getter;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.command.CmdHelp;
+import org.wolflink.minecraft.wolfird.framework.command.CmdTest;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
 
@@ -33,6 +34,7 @@ public class CommandContainer {
      */
     public void registerCommands() {
         commands.add(IOC.getBean(CmdHelp.class));
+        commands.add(IOC.getBean(CmdTest.class));
     }
     /**
      * 寻找最佳匹配指令
