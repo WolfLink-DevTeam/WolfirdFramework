@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
+import org.wolflink.minecraft.wolfird.framework.command.WolfirdTabCompleter;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
@@ -61,6 +62,7 @@ public final class Framework extends JavaPlugin {
         loadSubPlugins("addon-plugin");
         notifier.info("§f初始化完成，用时 §a"+TimingUtil.finish("framework_init")/1000.0+" §f秒");
         Bukkit.getPluginCommand("wolfird").setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
+        Bukkit.getPluginCommand("wolfird").setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
         IOC.getBean(CommandContainer.class).registerCommands();
     }
     @Override public void onDisable() {

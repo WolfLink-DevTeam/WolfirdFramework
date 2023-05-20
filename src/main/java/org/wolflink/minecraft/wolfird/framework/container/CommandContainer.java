@@ -1,9 +1,9 @@
 package org.wolflink.minecraft.wolfird.framework.container;
 
 import lombok.Getter;
+import org.wolflink.minecraft.wolfird.framework.bukkit.TNode;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.command.CmdHelp;
-import org.wolflink.minecraft.wolfird.framework.command.CmdTest;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
 
@@ -18,23 +18,28 @@ public class CommandContainer {
      */
     private final @Getter Set<WolfirdCommand> commands = new HashSet<>();
     /**
+     * 指令根节点，下一个节点是 wolfird
+     */
+    private final @Getter TNode<String> commandTree = new TNode<>("");
+    /**
      * 单独注册指令，一般是提供给子插件调用
      */
     public void registerCommand(WolfirdCommand command) {
+        commandTree.pathRef(command.getCommandArgs());
         commands.add(command);
     }
     /**
      * 单独注销指令，一般是提供给子插件调用
      */
     public void unregisterCommand(WolfirdCommand command) {
+        commandTree.pathDel(command.getCommandArgs());
         commands.remove(command);
     }
     /**
      * 初始化框架的所有指令
      */
     public void registerCommands() {
-        commands.add(IOC.getBean(CmdHelp.class));
-        commands.add(IOC.getBean(CmdTest.class));
+        registerCommand(IOC.getBean(CmdHelp.class));
     }
     /**
      * 寻找最佳匹配指令

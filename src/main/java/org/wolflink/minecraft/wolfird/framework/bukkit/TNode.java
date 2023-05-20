@@ -16,10 +16,20 @@ public class TNode<T> {
     public TNode(T value) {
         this.value = value;
     }
+    public Collection<T> getKeys(){return references.keySet();}
     public Collection<TNode<T>> getNodes(){return references.values();}
     @Nullable
     public TNode<T> get(T value){
         return references.get(value);
+    }
+    @Nullable
+    public TNode<T> getByPath(T[] values){
+        TNode<T> result = this;
+        for (T value : values) {
+            result = result.get(value);
+            if(result == null)return null;
+        }
+        return result;
     }
     public void ref(TNode<T> node){
         references.put(node.value,node);
