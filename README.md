@@ -1,5 +1,5 @@
 # Wolfird - 简洁规范的玩法开发框架
-![banner](https://img1.imgtp.com/2023/05/16/7vLrGSyb.png)
+![banner](https://img1.imgtp.com/2023/05/20/ufE0q6Q8.png)
 ![开源协议](https://img.shields.io/github/license/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Last Commit](https://img.shields.io/github/last-commit/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
