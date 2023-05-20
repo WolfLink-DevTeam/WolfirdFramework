@@ -22,7 +22,7 @@ public class WolfirdCommandExecutor implements CommandExecutor {
         System.arraycopy(args, 0, allArgs, 1, args.length);
         WolfirdCommand wolfirdCommand = commandContainer.findBestMatchCommand(allArgs);
         if(wolfirdCommand == null) notifier.cmdResult("未找到匹配的指令。",sender);
-        else wolfirdCommand.tryExecute(sender);
+        else wolfirdCommand.tryExecute(sender,allArgs);
         return true;
     }
 }

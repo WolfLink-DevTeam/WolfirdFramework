@@ -19,7 +19,7 @@ public class CmdHelp extends WolfirdCommand {
     }
 
     @Override
-    protected void execute(CommandSender sender) {
+    protected void execute(CommandSender sender,String[] args) {
         sender.sendMessage(" ");
         sender.sendMessage("§8[ "+notifier.getPrefix()+" §8]");
         sender.sendMessage(" ");
