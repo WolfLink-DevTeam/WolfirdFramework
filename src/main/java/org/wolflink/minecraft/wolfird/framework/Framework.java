@@ -26,7 +26,9 @@ public final class Framework extends JavaPlugin {
 
     private final @Getter FrameworkNotifier notifier;
 
-    @Getter private static Framework instance;
+    @Getter
+    private static Framework instance;
+
     public Framework() {
         instance = this;
         info = getInfo();
@@ -34,6 +36,7 @@ public final class Framework extends JavaPlugin {
         IOC.getBean(FrameworkConfig.class).load();
         notifier = IOC.getBean(FrameworkNotifier.class);
     }
+
     private void showBanner() {
         notifier.custom("""
 
@@ -48,7 +51,9 @@ public final class Framework extends JavaPlugin {
 
                 """);
     }
-    @Override public void onEnable() {
+
+    @Override
+    public void onEnable() {
         showBanner();
         notifier.info("开始初始化");
         TimingUtil.start("framework_init");
@@ -60,21 +65,24 @@ public final class Framework extends JavaPlugin {
         loadSubPlugins("system-plugin");
         notifier.info("正在加载可用拓展插件...");
         loadSubPlugins("addon-plugin");
-        notifier.info("§f初始化完成，用时 §a"+TimingUtil.finish("framework_init")/1000.0+" §f秒");
+        notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") / 1000.0 + " §f秒");
         Bukkit.getPluginCommand("wolfird").setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
         Bukkit.getPluginCommand("wolfird").setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
         IOC.getBean(CommandContainer.class).registerCommands();
     }
-    @Override public void onDisable() {
-        if(IOC.getBean(MongoDB.class).isError())return;
+
+    @Override
+    public void onDisable() {
+        if (IOC.getBean(MongoDB.class).isError()) return;
         // 保存配置文件
         IOC.getBean(FrameworkConfig.class).save();
         notifier.info("开始卸载框架");
         IOC.getBean(MongoDB.class).close();
     }
-    private void loadSubPlugins(String subPluginFolderName){
-        File subPluginFolder = new File(this.getDataFolder().getPath(),subPluginFolderName);
-        if(!subPluginFolder.exists())subPluginFolder.mkdirs();
+
+    private void loadSubPlugins(String subPluginFolderName) {
+        File subPluginFolder = new File(this.getDataFolder().getPath(), subPluginFolderName);
+        if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
         Bukkit.getPluginManager().loadPlugins(subPluginFolder);
     }
 }

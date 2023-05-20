@@ -17,12 +17,12 @@ public class WolfirdCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         CommandContainer commandContainer = IOC.getBean(CommandContainer.class);
-        String[] allArgs = new String[args.length+1];
+        String[] allArgs = new String[args.length + 1];
         allArgs[0] = command.getName();
         System.arraycopy(args, 0, allArgs, 1, args.length);
         WolfirdCommand wolfirdCommand = commandContainer.findBestMatchCommand(allArgs);
-        if(wolfirdCommand == null) notifier.cmdResult("未找到匹配的指令。",sender);
-        else wolfirdCommand.tryExecute(sender,allArgs);
+        if (wolfirdCommand == null) notifier.cmdResult("未找到匹配的指令。", sender);
+        else wolfirdCommand.tryExecute(sender, allArgs);
         return true;
     }
 }

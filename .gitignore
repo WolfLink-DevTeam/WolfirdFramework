@@ -5,6 +5,8 @@
 *.ipr
 *.iws
 
+src/test
+
 # IntelliJ
 out/
 

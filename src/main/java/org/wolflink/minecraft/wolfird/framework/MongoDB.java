@@ -28,19 +28,21 @@ public final class MongoDB {
     MongoClient client;
     @Getter
     MongoDatabase database;
+
     public MongoDB() {
         this(
                 Framework.getInstance().getConfig().getString("mongo_connection_url"),
                 Framework.getInstance().getConfig().getString("mongo_database_name")
         );
     }
-    private MongoDB(String connectionUrl,String databaseName) {
 
-        new Thread(()->{
+    private MongoDB(String connectionUrl, String databaseName) {
+
+        new Thread(() -> {
             try {
                 Thread.sleep(1000 * 10);
-                if(!error)return;
-                Bukkit.getLogger().log(Level.SEVERE,"无法创建数据库连接，请前往 config/WolfirdFramework/config.yml 修改相关配置");
+                if (!error) return;
+                Bukkit.getLogger().log(Level.SEVERE, "无法创建数据库连接，请前往 config/WolfirdFramework/config.yml 修改相关配置");
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -66,19 +68,21 @@ public final class MongoDB {
 
     /**
      * POJO 数据库集合操作
-     * @param collectionName    集合名称
-     * @param clazz             POJO类
-     * @param consumer          POJO消费函数
+     *
+     * @param collectionName 集合名称
+     * @param clazz          POJO类
+     * @param consumer       POJO消费函数
      */
-    public <T> void operate(String collectionName,Class<T> clazz, Consumer<MongoCollection<T>> consumer) {
-        MongoCollection<T> tMongoCollection = database.getCollection(collectionName,clazz);
+    public <T> void operate(String collectionName, Class<T> clazz, Consumer<MongoCollection<T>> consumer) {
+        MongoCollection<T> tMongoCollection = database.getCollection(collectionName, clazz);
         consumer.accept(tMongoCollection);
     }
 
     /**
      * Document 数据库集合操作
-     * @param collectionName    集合名称
-     * @param consumer          Document消费函数
+     *
+     * @param collectionName 集合名称
+     * @param consumer       Document消费函数
      */
     public void operate(String collectionName, Consumer<MongoCollection<Document>> consumer) {
         MongoCollection<Document> mongoCollection = database.getCollection(collectionName);

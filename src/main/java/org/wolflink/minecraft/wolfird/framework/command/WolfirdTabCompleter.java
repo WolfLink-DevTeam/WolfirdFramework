@@ -17,14 +17,15 @@ import java.util.List;
 public class WolfirdTabCompleter implements TabCompleter {
     @Inject
     private CommandContainer commandContainer;
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        args = Arrays.copyOfRange(args,0,args.length-1);
+        args = Arrays.copyOfRange(args, 0, args.length - 1);
         List<String> result = new ArrayList<>();
         TNode<String> wolfird = commandContainer.getCommandTree().get("wolfird");
-        if(wolfird == null)return result;
+        if (wolfird == null) return result;
         TNode<String> node = wolfird.getByPath(args);
-        if(node == null)return result;
+        if (node == null) return result;
         return node.getKeys().stream().toList();
     }
 }

@@ -14,17 +14,18 @@ public class CmdHelp extends WolfirdCommand {
     private FrameworkNotifier notifier;
     @Inject
     private CommandContainer commandContainer;
+
     public CmdHelp() {
-        super(false, true, true, "wolfird help","查看Wolfird框架插件帮助");
+        super(false, true, true, "wolfird help", "查看Wolfird框架插件帮助");
     }
 
     @Override
-    protected void execute(CommandSender sender,String[] args) {
+    protected void execute(CommandSender sender, String[] args) {
         sender.sendMessage(" ");
-        sender.sendMessage("§8[ "+notifier.getPrefix()+" §8]");
+        sender.sendMessage("§8[ " + notifier.getPrefix() + " §8]");
         sender.sendMessage(" ");
         for (WolfirdCommand command : commandContainer.getCommands()) {
-            sender.sendMessage("§f"+command.getCommandTemplate()+" §8- §7"+command.getHelpMessage());
+            sender.sendMessage("§f" + command.getCommandTemplate() + " §8- §7" + command.getHelpMessage());
         }
         sender.sendMessage(" ");
     }

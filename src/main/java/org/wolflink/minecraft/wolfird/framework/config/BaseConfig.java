@@ -21,10 +21,12 @@ public abstract class BaseConfig {
     /**
      * 存放运行时配置文档
      */
-    private final Map<ConfigProjection,Object> runtimeConfigs = new HashMap<>();
-    public BaseConfig(String table){
+    private final Map<ConfigProjection, Object> runtimeConfigs = new HashMap<>();
+
+    public BaseConfig(String table) {
         documentRepo = new DocumentRepository(table);
     }
+
     /**
      * 获取运行时配置
      */
@@ -34,20 +36,22 @@ public abstract class BaseConfig {
             return result;
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
-            Bukkit.getLogger().log(Level.SEVERE,"在进行类型转换时出现异常，相关信息："+configProjection.getPath());
+            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + configProjection.getPath());
             return null;
         }
     }
+
     /**
      * 修改运行时配置
      */
-    public void update(ConfigProjection configProjection,Object value) {
-        runtimeConfigs.put(configProjection,value);
+    public void update(ConfigProjection configProjection, Object value) {
+        runtimeConfigs.put(configProjection, value);
     }
+
     /**
      * 加载运行时配置
      */
-    public void load(){
+    public void load() {
         Bukkit.getLogger().info("正在从 MongoDB 中加载配置文件...");
         UUID uuid = UUID.randomUUID();
         TimingUtil.start(uuid.toString());
@@ -61,22 +65,23 @@ public abstract class BaseConfig {
                     )
             );
         }
-        Bukkit.getLogger().info("配置文件加载完成，用时 "+TimingUtil.finish(uuid.toString())/1000.0+" 秒");
+        Bukkit.getLogger().info("配置文件加载完成，用时 " + TimingUtil.finish(uuid.toString()) / 1000.0 + " 秒");
     }
+
     /**
      * 保存运行时配置
      */
-    public void save(){
+    public void save() {
         Bukkit.getLogger().info("正在向 MongoDB 中保存配置文件...");
         UUID uuid = UUID.randomUUID();
         TimingUtil.start(uuid.toString());
-        for (Map.Entry<ConfigProjection,Object> entry : runtimeConfigs.entrySet()) {
+        for (Map.Entry<ConfigProjection, Object> entry : runtimeConfigs.entrySet()) {
             documentRepo.updateValue(
                     entry.getKey().getDocumentName(),
                     entry.getKey().getPath(),
                     entry.getValue()
             );
         }
-        Bukkit.getLogger().info("配置文件保存完成，用时 "+TimingUtil.finish(uuid.toString())/1000.0+" 秒");
+        Bukkit.getLogger().info("配置文件保存完成，用时 " + TimingUtil.finish(uuid.toString()) / 1000.0 + " 秒");
     }
 }

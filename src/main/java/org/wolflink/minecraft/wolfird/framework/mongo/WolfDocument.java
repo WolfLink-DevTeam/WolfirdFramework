@@ -11,19 +11,24 @@ import org.bson.Document;
 public class WolfDocument {
 
     private Document thisDoc = new Document();
+
     public Document toDocument() {
         return thisDoc;
     }
+
     public WolfDocument(Document document) {
-        if(document == null)throw new IllegalArgumentException("Can't create WolfDocument because Document is null");
+        if (document == null) throw new IllegalArgumentException("Can't create WolfDocument because Document is null");
         thisDoc = document;
     }
-    public WolfDocument(String name){
-        thisDoc.put("documentName",name);
+
+    public WolfDocument(String name) {
+        thisDoc.put("documentName", name);
     }
+
     public String getName() {
         return thisDoc.getString("documentName");
     }
+
     /**
      * 根据路径设置值，例如：
      * server.ssh.port
@@ -32,18 +37,18 @@ public class WolfDocument {
     @Nullable
     public Object putByPath(final String path, final Object value) {
         String[] pathArgs = path.split("\\.");
-        String lastArg = pathArgs[pathArgs.length-1];
+        String lastArg = pathArgs[pathArgs.length - 1];
         Document nowDocument = thisDoc;
-        for(int i = 0;i < pathArgs.length-1;i++){
+        for (int i = 0; i < pathArgs.length - 1; i++) {
             String arg = pathArgs[i];
             Document doc = nowDocument.get(arg, Document.class);
-            if(doc == null) {
+            if (doc == null) {
                 doc = new Document();
-                nowDocument.put(arg,doc);
+                nowDocument.put(arg, doc);
             }
             nowDocument = doc;
         }
-        return nowDocument.put(lastArg,value);
+        return nowDocument.put(lastArg, value);
     }
 
     /**
@@ -53,12 +58,12 @@ public class WolfDocument {
     @Nullable
     public Object getByPath(final String path) {
         String[] pathArgs = path.split("\\.");
-        String lastArg = pathArgs[pathArgs.length-1];
+        String lastArg = pathArgs[pathArgs.length - 1];
         Document nowDocument = thisDoc;
-        for(int i = 0;i < pathArgs.length-1;i++){
+        for (int i = 0; i < pathArgs.length - 1; i++) {
             String arg = pathArgs[i];
             Document doc = nowDocument.get(arg, Document.class);
-            if(doc == null) {
+            if (doc == null) {
                 return null;
             }
             nowDocument = doc;

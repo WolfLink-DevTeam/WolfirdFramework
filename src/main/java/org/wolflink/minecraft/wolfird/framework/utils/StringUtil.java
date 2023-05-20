@@ -8,13 +8,13 @@ public class StringUtil {
     public static String underline2SmallHump(final String underlineString) {
         boolean uppercase = false;
         StringBuilder buffer = new StringBuilder();
-        for (int i = 0;i < underlineString.length();i++) {
+        for (int i = 0; i < underlineString.length(); i++) {
             char c = underlineString.charAt(i);
-            if(c == '_') {
+            if (c == '_') {
                 uppercase = true;
                 continue;
             }
-            if(uppercase) {
+            if (uppercase) {
                 uppercase = false;
                 buffer.append(Character.toUpperCase(c));
             } else {

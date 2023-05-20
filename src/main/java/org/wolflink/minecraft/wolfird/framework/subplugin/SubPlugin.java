@@ -22,25 +22,27 @@ public abstract class SubPlugin extends JavaPlugin {
 
     protected final @Getter SubPluginNotifier notifier;
 
-    public SubPlugin(){
+    public SubPlugin() {
         this.info = this.getDescription();
         this.notifier = new SubPluginNotifier(info.getPrefix());
     }
 
-    public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer(){
-        if(this instanceof AddonPlugin) return (T) IOC.getBean(AddonContainer.class);
-        else if(this instanceof ModePlugin) return (T) IOC.getBean(ModeContainer.class);
-        else if(this instanceof SystemPlugin) return (T) IOC.getBean(SystemContainer.class);
+    public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer() {
+        if (this instanceof AddonPlugin) return (T) IOC.getBean(AddonContainer.class);
+        else if (this instanceof ModePlugin) return (T) IOC.getBean(ModeContainer.class);
+        else if (this instanceof SystemPlugin) return (T) IOC.getBean(SystemContainer.class);
         return null;
     }
 
     // TODO 应该再弄个列表存储某个子插件注册的所有指令，在插件卸载时把那些指令全部注销
+
     /**
      * 向框架中注册指令
      */
     public void registerCommand(WolfirdCommand command) {
         IOC.getBean(CommandContainer.class).registerCommand(command);
     }
+
     /**
      * 向框架中取消注册指令
      */
@@ -53,6 +55,7 @@ public abstract class SubPlugin extends JavaPlugin {
      * 该方法的调用顺序应该在 onEnable 之前。
      */
     protected abstract void init();
+
     /**
      * 注销方法，向框架容器注销插件
      * 需要在 onDisable 之前调用

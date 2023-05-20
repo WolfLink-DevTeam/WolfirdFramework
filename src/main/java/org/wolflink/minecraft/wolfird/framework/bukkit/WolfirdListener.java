@@ -20,24 +20,28 @@ public abstract class WolfirdListener implements Listener {
      * 存储该监听器涉及到的所有调度器任务，以便于禁用监听器时注销所有任务
      */
     private final Set<Integer> taskIdSet = new HashSet<>();
-    public void runTaskLater(Runnable runnable,long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getInstance(),runnable,delay).getTaskId());
+
+    public void runTaskLater(Runnable runnable, long delay) {
+        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getInstance(), runnable, delay).getTaskId());
     }
-    public void runTaskLaterAsync(Runnable runnable,long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(),runnable,delay).getTaskId());
+
+    public void runTaskLaterAsync(Runnable runnable, long delay) {
+        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(), runnable, delay).getTaskId());
     }
-    public void runTaskTimer(Runnable runnable,long delay,long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getInstance(),runnable,delay,period).getTaskId());
+
+    public void runTaskTimer(Runnable runnable, long delay, long period) {
+        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getInstance(), runnable, delay, period).getTaskId());
     }
-    public void runTaskTimerAsync(Runnable runnable,long delay,long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(),runnable,delay,period).getTaskId());
+
+    public void runTaskTimerAsync(Runnable runnable, long delay, long period) {
+        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(), runnable, delay, period).getTaskId());
     }
 
     public void setEnabled(final boolean enabled) {
-        if(this.enabled == enabled)return;
+        if (this.enabled == enabled) return;
         this.enabled = enabled;
         // 从禁用到启用
-        if(enabled) {
+        if (enabled) {
             Bukkit.getPluginManager().registerEvents(this, Framework.getInstance());
         }
         // 从启用到禁用
@@ -47,18 +51,18 @@ public abstract class WolfirdListener implements Listener {
             Set<Class<Event>> eventClasses = new HashSet<>();
 
             for (Method method : getClass().getDeclaredMethods()) {
-                if(method.getAnnotation(EventHandler.class) == null)continue;
+                if (method.getAnnotation(EventHandler.class) == null) continue;
                 for (Class<?> argClass : method.getParameterTypes()) {
                     // 判断参数类的类型是否继承自 Event 类
-                    if(Event.class.isAssignableFrom(argClass)) {
+                    if (Event.class.isAssignableFrom(argClass)) {
                         eventClasses.add((Class<Event>) argClass);
                     }
                 }
             }
             for (Class<Event> eventClass : eventClasses) {
                 try {
-                    Method getHandlerList = eventClass.getMethod("getHandlerList",null);
-                    HandlerList handlerList = (HandlerList) getHandlerList.invoke(null,null);
+                    Method getHandlerList = eventClass.getMethod("getHandlerList", null);
+                    HandlerList handlerList = (HandlerList) getHandlerList.invoke(null, null);
                     handlerList.unregister(this);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                     e.printStackTrace();

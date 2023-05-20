@@ -21,6 +21,7 @@ public class CommandContainer {
      * 指令根节点，下一个节点是 wolfird
      */
     private final @Getter TNode<String> commandTree = new TNode<>("");
+
     /**
      * 单独注册指令，一般是提供给子插件调用
      */
@@ -28,6 +29,7 @@ public class CommandContainer {
         commandTree.pathRef(command.getCommandArgs());
         commands.add(command);
     }
+
     /**
      * 单独注销指令，一般是提供给子插件调用
      */
@@ -35,12 +37,14 @@ public class CommandContainer {
         commandTree.pathDel(command.getCommandArgs());
         commands.remove(command);
     }
+
     /**
      * 初始化框架的所有指令
      */
     public void registerCommands() {
         registerCommand(IOC.getBean(CmdHelp.class));
     }
+
     /**
      * 寻找最佳匹配指令
      */
@@ -48,19 +52,19 @@ public class CommandContainer {
         int inputLen = inputArgs.length;
         for (WolfirdCommand command : commands) {
             // 长度不匹配，跳过
-            if(command.getCommandArgs().length != inputLen) continue;
+            if (command.getCommandArgs().length != inputLen) continue;
             boolean match = true;
             // 长度匹配的情况再做具体判定
-            for (int i = 0 ; i < inputLen ; i++) {
+            for (int i = 0; i < inputLen; i++) {
                 String cmdArg = command.getCommandArgs()[i];
-                if(cmdArg.contains("{"))continue;
+                if (cmdArg.contains("{")) continue;
                 String inputArg = inputArgs[i];
-                if(! cmdArg.equalsIgnoreCase(inputArg)) {
+                if (!cmdArg.equalsIgnoreCase(inputArg)) {
                     match = false;
                     break;
                 }
             }
-            if(match)return command;
+            if (match) return command;
         }
         return null;
     }

@@ -17,39 +17,52 @@ import java.util.List;
  */
 public class EntityRepository<E> {
     private @Getter String table = null;
-    private @Getter final MongoCollection<E> collection;
-    private @Getter final Class<E> entityClass;
+    private @Getter
+    final MongoCollection<E> collection;
+    private @Getter
+    final Class<E> entityClass;
     // 主键名(主键也只允许String类型)
     private @Getter String primaryKey = null;
+
     public EntityRepository(Class<E> entityClass) {
         this.entityClass = entityClass;
-        if(entityClass.getAnnotation(MongoTable.class) != null){
+        if (entityClass.getAnnotation(MongoTable.class) != null) {
             this.table = entityClass.getAnnotation(MongoTable.class).name();
         }
-        for (Field field : entityClass.getDeclaredFields()){
-            if(field.getAnnotation(PrimaryKey.class) != null){
+        for (Field field : entityClass.getDeclaredFields()) {
+            if (field.getAnnotation(PrimaryKey.class) != null) {
                 primaryKey = field.getName();
                 break;
             }
         }
-        if(primaryKey == null)throw new IllegalArgumentException("实体类中没有用 @PrimaryKey 注解标记主键");
-        collection = IOC.getBean(MongoDB.class).getDatabase().getCollection(table,entityClass);
-        collection.createIndex(new Document(primaryKey,1), new IndexOptions().unique(true));
+        if (primaryKey == null) throw new IllegalArgumentException("实体类中没有用 @PrimaryKey 注解标记主键");
+        collection = IOC.getBean(MongoDB.class).getDatabase().getCollection(table, entityClass);
+        collection.createIndex(new Document(primaryKey, 1), new IndexOptions().unique(true));
     }
+
     @Nullable
     public E findByPrimaryKey(Object value) {
-        return collection.find(new Document(primaryKey,value)).first();
+        return collection.find(new Document(primaryKey, value)).first();
     }
+
     public void insert(List<? extends E> entities) {
         collection.insertMany(entities);
     }
+
     public void insert(E entity) {
         collection.insertOne(entity);
     }
-    public void updateByPrimaryKey(Object value,E entity) {
+
+    public void updateByPrimaryKey(Object value, E entity) {
         deleteByPrimaryKey(value);
         insert(entity);
     }
-    public void deleteByPrimaryKey(Object value) { collection.deleteOne(new Document(primaryKey,value)); }
-    public void clear() { collection.drop(); }
+
+    public void deleteByPrimaryKey(Object value) {
+        collection.deleteOne(new Document(primaryKey, value));
+    }
+
+    public void clear() {
+        collection.drop();
+    }
 }
