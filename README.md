@@ -6,7 +6,16 @@
 [![Star History Chart](https://api.star-history.com/svg?repos=WolfLink-DevTeam/WolfirdFramework&type=Date)](https://star-history.com/#WolfLink-DevTeam/WolfirdFramework&Date)
 ### 简介
 &emsp;&emsp;这是一个面向快速上手、敏捷开发的 Minecraft Bukkit 插件玩法开发框架，使用了 MongoDB 与 IOC，对Bukkit提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
-### 主类
+### 快速使用
+&emsp;&emsp;前往 Release 界面下载 Wolfird-Framework 插件，放到服务器的 plugins 目录后启动服务器，启动过程中会遇到报错属于正常现象，启动完成后关闭服务器，修改 WolfirdFramework 的配置文件以对接你自己的 MongoDB。  
+&emsp;&emsp;如果你还没有部署 MongoDB 请前往 https://www.mongodb.com/try/download/community 下载社区版 MongoDB 并安装，相关配置请自行查阅文档。
+### 更新日志
+2023/5/21 - v1.0.0 首次发布
+### 待办
+- 添加与玩家属性相关的封装，以便于更规范地动态修改玩家属性，如 移动速度、生命值、基础伤害、伤害增益...
+- 编写更加详细的开发 WIKI
+### 开发者教程
+#### 主类
 &emsp;&emsp;子插件主类不再直接继承 JavaPlugin，而是从 AddonPlugin、ModePlugin、SystemPlugin 中选择一个继承。
 AddonPlugin 描述的是一个小功能拓展插件；ModePlugin 描述的是一个游戏模式拓展插件，例如 UHC 模式、猎人游戏模式等；SystemPlugin 描述逇一个大型玩法系统拓展插件。
 ```java
@@ -15,7 +24,7 @@ public final class WolfirdTestAddon1 extends AddonPlugin {
 	// 具体方法...
 }
 ```
-### 事件监听器
+#### 事件监听器
 &emsp;&emsp;不再需要直接实现 Listener 接口，而是继承 WolfirdListener 抽象类。
 WolfirdListener 提供了比 Bukkit 封装的 Listener 更加方便的注册和取消注册的方式，只需要通过 setEnabled 改变其状态即可，另外事件监听方法仍然需要使用 @EventHandler 进行标注。
 如果需要在监听器中使用调度器执行延迟任务或周期任务等，请不要使用 Bukkit.getScheduler().runTask() 等方法，而是使用 WolfirdListener 内封装的相关方法。
@@ -42,7 +51,7 @@ class Test {
     }
 }
 ```
-### 指令
+#### 指令
 &emsp;&emsp;只需要实现 WolfirdCommand 抽象类，之后调用插件主类(AddonPlugin、ModePlugin、SystemPlugin)的registerCommand()方法即可注册，不需要再自己实现setExecutor、编写配置文件之类的。
 ```java
 public class CmdTest extends WolfirdCommand {
@@ -70,7 +79,7 @@ class Test {
 }
 
 ```
-### 配置文件
+#### 配置文件
 &emsp;&emsp;主要的配置文件都是存放在 MongoDB 中的，开发者需要创建子插件独立的配置文件时只需要继承 BaseConfig 类并创建单例，之后需要给定默认配置清单，包括配置路径、配置值，然后就可以调用封装好的 load() update() save() 方法便捷完成配置文件的修改和持久化操作。
 
 ```java
@@ -99,7 +108,7 @@ class Test {
     }
 }
 ```
-### 数据库
+#### 数据库
 &emsp;&emsp;数据库部分主要指的是POJO映射，框架封装了一个 EntityRepository<E> 类，泛型类型E作为其实体类。该实体类必须有以下特点：
 
 1. 由 @Data 注解标注，或手动实现其所有的get、set、hash等基本数据方法
@@ -132,7 +141,7 @@ class Test {
     }
 }
 ```
-### 日志
+#### 日志
 &emsp;&emsp;提供了便捷的 SubPluginNotifier 封装，继承自 BaseNotifier，前缀名称通过 plugin.yml 中的 prefix 配置项进行设置，可以带有颜色，如 §9Wolfird。通过子插件主类的 notifier 成员变量获取消息通知器。
 
 ```java
