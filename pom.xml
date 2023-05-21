@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.wolflink.minecraft.wolfird</groupId>
-    <artifactId>Framework</artifactId>
+    <artifactId>wolfird-framework</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
