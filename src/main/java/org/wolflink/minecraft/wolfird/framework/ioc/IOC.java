@@ -18,7 +18,7 @@ public class IOC {
     private static final AtomicReference<Class<?>> busyClass = new AtomicReference<>();
 
     // 常量定义
-    private static final String LOOPBACK_ERROR = "不允许回环依赖注入: %i";
+    private static final String LOOPBACK_ERROR = "不允许回环依赖注入: ";
     private static final String NULL_RESULT = " 实例化结果为 null";
 
     // 添加一个私有构造器，防止实例化工具类
