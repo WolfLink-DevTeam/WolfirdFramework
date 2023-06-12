@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 
 public class IOC {
@@ -15,7 +15,7 @@ public class IOC {
     // 存储单例对象的映射表
     private static final ConcurrentHashMap<Class<?>, Object> singletonMap = new ConcurrentHashMap<>();
     // 存储当前正在创建的类
-    private static final AtomicReference<Class<?>> busyClass = new AtomicReference<>();
+    private static final ThreadLocal<ArrayDeque<Class<?>>> busyClassStack = ThreadLocal.withInitial(ArrayDeque::new);
 
     // 常量定义
     private static final String LOOPBACK_ERROR = "不允许回环依赖注入: ";
@@ -56,11 +56,12 @@ public class IOC {
         T result = null;
         try {
             checkCircularDependency(clazz);
-            busyClass.set(clazz);
+            busyClassStack.get().push(clazz);
             result = createInstance(clazz, arguments);
             setField(clazz, result);
             saveSingleton(clazz, result);
-            busyClass.set(null);
+            busyClassStack.get().pop();
+            busyClassStack.remove();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,8 +70,8 @@ public class IOC {
 
     // 检查是否存在回环依赖
     private static void checkCircularDependency(Class<?> clazz) {
-        if (busyClass.get() == clazz) {
-            throw new IllegalArgumentException(LOOPBACK_ERROR + busyClass.get().getName());
+        if (busyClassStack.get().contains(clazz)) {
+            throw new IllegalArgumentException(LOOPBACK_ERROR + busyClassStack.get().stream().map(Class::getName).collect(Collectors.joining(" -> ")));
         }
     }
 
