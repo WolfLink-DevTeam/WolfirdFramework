@@ -15,7 +15,7 @@ public class IOC {
     // 存储单例对象的映射表
     private static final ConcurrentHashMap<Class<?>, Object> singletonMap = new ConcurrentHashMap<>();
     // 存储当前正在创建的类
-    private static final ThreadLocal<ArrayDeque<Class<?>>> busyClassStack = ThreadLocal.withInitial(ArrayDeque::new);
+    private static final Map<Long, ArrayDeque<Class<?>>> busyClassMap = new ConcurrentHashMap<>();
 
     // 常量定义
     private static final String LOOPBACK_ERROR = "不允许回环依赖注入: ";
@@ -35,62 +35,60 @@ public class IOC {
      */
     @Nonnull
     public static <T> T getBean(Class<? extends T> clazz, Object... arguments) {
-        // 双重检查锁定
         if (singletonMap.containsKey(clazz)) {
             return clazz.cast(singletonMap.get(clazz));
         }
-        synchronized (IOC.class) {
-            if (singletonMap.containsKey(clazz)) {
-                return clazz.cast(singletonMap.get(clazz));
-            }
-            T result = createBean(clazz, arguments);
-            if (result == null) {
-                throw new NullPointerException(clazz.getName() + NULL_RESULT);
-            }
-            return result;
+        T result = createBean(clazz, arguments);
+        if (result == null) {
+            throw new NullPointerException(clazz.getName() + NULL_RESULT);
         }
+        return result;
     }
 
     // 创建Bean实例，并注入依赖
     private static <T> T createBean(Class<? extends T> clazz, Object... arguments) {
         T result = null;
+        ArrayDeque<Class<?>> busyClasses = getBusyClasses();
         try {
             checkCircularDependency(clazz);
-            busyClassStack.get().push(clazz);
+            busyClasses.push(clazz);
             result = createInstance(clazz, arguments);
             setField(clazz, result);
             saveSingleton(clazz, result);
-            busyClassStack.get().pop();
-            busyClassStack.remove();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+        busyClasses.pop();
         return result;
+    }
+
+    @Nonnull
+    private static ArrayDeque<Class<?>> getBusyClasses() {
+        return busyClassMap.computeIfAbsent(Thread.currentThread().getId(), k -> new ArrayDeque<>());
     }
 
     // 检查是否存在回环依赖
     private static void checkCircularDependency(Class<?> clazz) {
-        if (busyClassStack.get().contains(clazz)) {
-            throw new IllegalArgumentException(LOOPBACK_ERROR + busyClassStack.get().stream().map(Class::getName).collect(Collectors.joining(" -> ")));
+        if (getBusyClasses().contains(clazz)) {
+            throw new IllegalArgumentException(LOOPBACK_ERROR + getBusyClasses().stream().map(Class::getName).collect(Collectors.joining(" -> ")));
         }
     }
 
     // 根据构造方法参数创建实例
-    private static <T> T createInstance(Class<? extends T> clazz, Object... arguments) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    @Nonnull
+    private static <T> T createInstance(@Nonnull Class<? extends T> clazz, Object... arguments) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Constructor<? extends T> constructor;
-        try {
-            constructor = clazz.getConstructor(Arrays.stream(arguments).map(Object::getClass).toArray(Class[]::new));
-            return constructor.newInstance(arguments);
-        } catch (NoSuchMethodException e) {
-            return clazz.getDeclaredConstructor().newInstance();
-        }
+        if (arguments.length == 0) return clazz.getDeclaredConstructor().newInstance();
+        constructor = clazz.getConstructor(Arrays.stream(arguments).map(Object::getClass).toArray(Class[]::new));
+        return constructor.newInstance(arguments);
     }
 
     // 注入依赖字段
-    private static <T> void setField(Class<? extends T> clazz, T result) throws IllegalAccessException {
+    private static <T> void setField(@Nonnull Class<? extends T> clazz, T result) throws IllegalAccessException {
         for (Field field : clazz.getDeclaredFields()) {
             if (field.getAnnotation(Inject.class) != null) {
-                if (!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier.isFinal(field.getModifiers())) {
+                if (!Modifier.isFinal(field.getModifiers())) {
                     field.setAccessible(true);
                 }
                 field.set(result, getBean(field.getType()));
@@ -99,7 +97,7 @@ public class IOC {
     }
 
     // 如果是单例类，则保存到映射表中
-    private static <T> void saveSingleton(Class<? extends T> clazz, T result) {
+    private static <T> void saveSingleton(@Nonnull Class<? extends T> clazz, T result) {
         if (clazz.getAnnotation(Singleton.class) != null) {
             singletonMap.put(clazz, result);
         }
