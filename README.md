@@ -24,17 +24,12 @@
   
 ### 开发者教程
 #### 主类
-&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是从 AddonPlugin、ModePlugin、SystemPlugin 中选择一个继承。
+&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `SubPlugin`。
 
-> `AddonPlugin`: 一个小功能拓展插件；
-> 
-> `ModePlugin`: 一个游戏模式拓展插件，例如 UHC 模式、猎人游戏模式等；
-> 
-> `SystemPlugin`: 一个大型玩法系统拓展插件。
 
 ```java
 // 这是一个示例模块插件的主类
-public final class WolfirdTestAddon1 extends AddonPlugin {
+public final class WolfirdTestAddon1 extends SubPlugin {
 	// 具体方法...
 }
 ```
