@@ -2,16 +2,13 @@ package org.wolflink.minecraft.wolfird.framework;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdTabCompleter;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
@@ -23,15 +20,13 @@ import java.util.Objects;
  */
 public final class Framework extends JavaPlugin {
 
+    @Getter
+    private static Framework instance;
     /**
      * 插件描述信息，详见 plugin.yml
      */
     private final @Getter PluginDescriptionFile info;
-
     private final @Getter FrameworkNotifier notifier;
-
-    @Getter
-    private static Framework instance;
 
     public Framework() {
         instance = this;

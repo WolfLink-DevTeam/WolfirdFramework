@@ -55,7 +55,6 @@ public class IOC {
             result = createInstance(clazz, arguments);
             setField(clazz, result);
             saveSingleton(clazz, result);
-
         } catch (Exception e) {
             e.printStackTrace();
         }

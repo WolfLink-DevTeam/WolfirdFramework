@@ -100,11 +100,5 @@
             <artifactId>mongodb-crypt</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>23.0.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
