@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.subplugin.mode;
+package org.wolflink.minecraft.wolfird.framework.stage;
 
 public abstract class Stage {
     private final long taskPeriod;
