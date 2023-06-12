@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.mongo.DocumentRepository;
 import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -21,9 +21,9 @@ public abstract class BaseConfig {
     /**
      * 存放运行时配置文档
      */
-    private final Map<ConfigProjection, Object> runtimeConfigs = new HashMap<>();
+    private final EnumMap<ConfigProjection, Object> runtimeConfigs = new EnumMap<>(ConfigProjection.class);
 
-    public BaseConfig(String table) {
+    protected BaseConfig(String table) {
         documentRepo = new DocumentRepository(table);
     }
 

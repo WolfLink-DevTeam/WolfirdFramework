@@ -37,6 +37,7 @@ public final class Framework extends JavaPlugin {
     }
 
     private void showBanner() {
+        //TODO：里面的版本信息得用字符串变量替换！
         notifier.custom("""
 
 
@@ -44,7 +45,7 @@ public final class Framework extends JavaPlugin {
                 ██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗
                 ██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] WolfLink-DevTeam
                 ██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║
-                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] 1.0.0 - SNAPSHOT
+                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] 1.1.0 - SNAPSHOT
                 ╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝
                  ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝
 
