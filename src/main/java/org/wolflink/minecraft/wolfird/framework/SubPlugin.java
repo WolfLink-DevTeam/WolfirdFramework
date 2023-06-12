@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.subplugin;
+package org.wolflink.minecraft.wolfird.framework;
 
 
 import lombok.Getter;
@@ -8,15 +8,10 @@ import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.*;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
-import org.wolflink.minecraft.wolfird.framework.subplugin.addon.AddonPlugin;
-import org.wolflink.minecraft.wolfird.framework.subplugin.mode.ModePlugin;
-import org.wolflink.minecraft.wolfird.framework.subplugin.system.SystemPlugin;
 
 /**
- * 代表一个 Wolfird 子插件抽象
- * 可能是：Mode(模式插件)、Addon(功能拓展插件)、System(玩法系统插件)
+ * 代表一个 Wolfird 子插件
  */
-@SuppressWarnings("Do not inherit this class,it's just used for framework.")
 public abstract class SubPlugin extends JavaPlugin {
     /**
      * 插件描述信息，详见 plugin.yml
@@ -25,16 +20,12 @@ public abstract class SubPlugin extends JavaPlugin {
 
     protected final @Getter SubPluginNotifier notifier;
 
-    public SubPlugin() {
-        this.info = this.getDescription();
-        this.notifier = new SubPluginNotifier(info.getPrefix());
-    }
+    protected final @Getter SubPluginContainer container;
 
-    public <T extends SubPluginContainer<? extends SubPlugin>> T getContainer() {
-        if (this instanceof AddonPlugin) return (T) IOC.getBean(AddonContainer.class);
-        else if (this instanceof ModePlugin) return (T) IOC.getBean(ModeContainer.class);
-        else if (this instanceof SystemPlugin) return (T) IOC.getBean(SystemContainer.class);
-        return null;
+    public SubPlugin() {
+        this.info = getDescription();
+        this.notifier = new SubPluginNotifier(info.getPrefix());
+        this.container = IOC.getBean(SubPluginContainer.class);
     }
 
     // TODO 应该再弄个列表存储某个子插件注册的所有指令，在插件卸载时把那些指令全部注销
@@ -54,14 +45,24 @@ public abstract class SubPlugin extends JavaPlugin {
     }
 
     /**
-     * 初始化方法，向 Framework 容器注册之类的。
-     * 该方法的调用顺序应该在 onEnable 之前。
+     * 初始化方法，向 Framework 容器注册该子插件
      */
-    protected abstract void init();
+    @Override
+    public void onEnable() {
+        notifier.info("正在向框架注册该系统插件...");
+        if (container.registerSubPlugin(info.getName(), this)) {
+            notifier.info("注册完成");
+        } else notifier.error("注册失败");
+    }
 
     /**
-     * 注销方法，向框架容器注销插件
-     * 需要在 onDisable 之前调用
+     * 注销方法，向框架容器注销该子插件
      */
-    protected abstract void beforeDisable();
+    @Override
+    public void onDisable() {
+        notifier.info("正在向框架注销该系统插件...");
+        if (container.unregisterSubPlugin(info.getName(), this)) {
+            notifier.info("注销完成");
+        } else notifier.error("注销失败");
+    }
 }
