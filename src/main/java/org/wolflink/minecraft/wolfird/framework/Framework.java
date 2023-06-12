@@ -16,6 +16,7 @@ import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
 import java.io.File;
+import java.util.Objects;
 
 /**
  * 框架 Bukkit 插件主类
@@ -62,15 +63,11 @@ public final class Framework extends JavaPlugin {
         TimingUtil.start("framework_init");
         this.saveDefaultConfig();
         IOC.getBean(MongoDB.class).setError(false);
-        notifier.info("正在加载可用模式插件...");
-        loadSubPlugins("mode-plugin");
-        notifier.info("正在加载可用系统插件...");
-        loadSubPlugins("system-plugin");
-        notifier.info("正在加载可用拓展插件...");
-        loadSubPlugins("addon-plugin");
+        notifier.info("正在加载可用子插件...");
+        loadSubPlugins();
         notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") / 1000.0 + " §f秒");
-        Bukkit.getPluginCommand("wolfird").setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
-        Bukkit.getPluginCommand("wolfird").setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
+        Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
+        Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
         IOC.getBean(CommandContainer.class).registerCommands();
     }
 
@@ -83,8 +80,8 @@ public final class Framework extends JavaPlugin {
         IOC.getBean(MongoDB.class).close();
     }
 
-    private void loadSubPlugins(String subPluginFolderName) {
-        File subPluginFolder = new File(this.getDataFolder().getPath(), subPluginFolderName);
+    private void loadSubPlugins() {
+        File subPluginFolder = new File(this.getDataFolder().getPath(), "sub-plugin");
         if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
         Bukkit.getPluginManager().loadPlugins(subPluginFolder);
     }
