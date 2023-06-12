@@ -2,6 +2,9 @@ package org.wolflink.minecraft.wolfird.framework;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;

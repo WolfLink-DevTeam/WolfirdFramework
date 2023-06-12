@@ -1,6 +1,7 @@
-package org.wolflink.minecraft.wolfird.framework.subplugin;
+package org.wolflink.minecraft.wolfird.framework.subplugin.addon;
 
 import org.wolflink.minecraft.wolfird.framework.container.AddonContainer;
+import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
 /**
  * 小型玩法拓展子插件

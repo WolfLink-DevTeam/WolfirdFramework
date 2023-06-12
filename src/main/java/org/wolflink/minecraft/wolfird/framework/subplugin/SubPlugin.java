@@ -8,6 +8,9 @@ import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.*;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
+import org.wolflink.minecraft.wolfird.framework.subplugin.addon.AddonPlugin;
+import org.wolflink.minecraft.wolfird.framework.subplugin.mode.ModePlugin;
+import org.wolflink.minecraft.wolfird.framework.subplugin.system.SystemPlugin;
 
 /**
  * 代表一个 Wolfird 子插件抽象

@@ -1,6 +1,7 @@
-package org.wolflink.minecraft.wolfird.framework.subplugin;
+package org.wolflink.minecraft.wolfird.framework.subplugin.mode;
 
 import org.wolflink.minecraft.wolfird.framework.container.ModeContainer;
+import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
 /**
  * 游戏模式拓展插件

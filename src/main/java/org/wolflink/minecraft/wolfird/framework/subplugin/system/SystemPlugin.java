@@ -1,6 +1,7 @@
-package org.wolflink.minecraft.wolfird.framework.subplugin;
+package org.wolflink.minecraft.wolfird.framework.subplugin.system;
 
 import org.wolflink.minecraft.wolfird.framework.container.SystemContainer;
+import org.wolflink.minecraft.wolfird.framework.subplugin.SubPlugin;
 
 /**
  * 大型玩法系统拓展插件
