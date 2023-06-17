@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.mongo;
+package org.wolflink.minecraft.wolfird.framework.database.mongo;
 
 import com.mongodb.lang.Nullable;
 import org.bson.Document;
@@ -8,7 +8,7 @@ import org.bson.Document;
  * 提供了根据路径插入值和根据路径查询值的方法
  * 在与MongoDB互相操作时需要调用 toDocument() 方法转换为 Document 类型
  */
-public class WolfDocument {
+public class MongoDocument {
 
     private Document thisDoc = new Document();
 
@@ -16,12 +16,12 @@ public class WolfDocument {
         return thisDoc;
     }
 
-    public WolfDocument(Document document) {
+    public MongoDocument(Document document) {
         if (document == null) throw new IllegalArgumentException("Can't create WolfDocument because Document is null");
         thisDoc = document;
     }
 
-    public WolfDocument(String name) {
+    public MongoDocument(String name) {
         thisDoc.put("documentName", name);
     }
 

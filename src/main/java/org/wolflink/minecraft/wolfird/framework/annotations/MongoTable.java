@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.mongo;
+package org.wolflink.minecraft.wolfird.framework.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
