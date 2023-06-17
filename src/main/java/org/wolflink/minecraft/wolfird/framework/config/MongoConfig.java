@@ -10,18 +10,13 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 /**
- * 通用配置文件类
  * 不要使用 Notifier，因为配置数据的加载顺序在Notifier之前，实例化Notifier又依赖配置数据
  */
-public class MongoConfig {
+public abstract class MongoConfig extends BaseConfig {
     /**
      * 文档仓库
      */
     private final MongoDocumentRepository documentRepo;
-    /**
-     * 存放运行时配置文档
-     */
-    private final EnumMap<ConfigProjection, Object> runtimeConfigs = new EnumMap<>(ConfigProjection.class);
 
     public MongoConfig(String table) {
         documentRepo = new MongoDocumentRepository(table);
@@ -30,6 +25,7 @@ public class MongoConfig {
     /**
      * 获取运行时配置
      */
+    @Override
     public <T> T get(ConfigProjection configProjection) {
         try {
             T result = (T) runtimeConfigs.get(configProjection);
@@ -44,6 +40,7 @@ public class MongoConfig {
     /**
      * 修改运行时配置
      */
+    @Override
     public void update(ConfigProjection configProjection, Object value) {
         runtimeConfigs.put(configProjection, value);
     }
@@ -51,6 +48,7 @@ public class MongoConfig {
     /**
      * 加载运行时配置
      */
+    @Override
     public void load() {
         Bukkit.getLogger().info("正在从 MongoDB 中加载配置文件...");
         UUID uuid = UUID.randomUUID();
@@ -71,6 +69,7 @@ public class MongoConfig {
     /**
      * 保存运行时配置
      */
+    @Override
     public void save() {
         Bukkit.getLogger().info("正在向 MongoDB 中保存配置文件...");
         UUID uuid = UUID.randomUUID();

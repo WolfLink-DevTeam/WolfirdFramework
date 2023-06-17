@@ -9,7 +9,7 @@ import org.wolflink.minecraft.wolfird.framework.MongoDB;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 
 /**
- * 结构不规则的文档仓库
+ * DAO层结构不规则的文档仓库
  * 包含若干个结构不一致的文档
  */
 public class MongoDocumentRepository {

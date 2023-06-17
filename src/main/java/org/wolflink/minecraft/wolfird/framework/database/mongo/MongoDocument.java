@@ -2,13 +2,13 @@ package org.wolflink.minecraft.wolfird.framework.database.mongo;
 
 import com.mongodb.lang.Nullable;
 import org.bson.Document;
+import org.wolflink.minecraft.wolfird.framework.database.common.BaseDocument;
 
 /**
- * 封装文档类
- * 提供了根据路径插入值和根据路径查询值的方法
+ * Entity层
  * 在与MongoDB互相操作时需要调用 toDocument() 方法转换为 Document 类型
  */
-public class MongoDocument {
+public class MongoDocument extends BaseDocument {
 
     private Document thisDoc = new Document();
 
@@ -17,7 +17,7 @@ public class MongoDocument {
     }
 
     public MongoDocument(Document document) {
-        if (document == null) throw new IllegalArgumentException("Can't create WolfDocument because Document is null");
+        if (document == null) throw new IllegalArgumentException("Can't create MongoDocument because Document is null");
         thisDoc = document;
     }
 
@@ -25,16 +25,12 @@ public class MongoDocument {
         thisDoc.put("documentName", name);
     }
 
-    public String getName() {
+    @Override
+    public String getDocumentName() {
         return thisDoc.getString("documentName");
     }
 
-    /**
-     * 根据路径设置值，例如：
-     * server.ssh.port
-     * server.ssh.enabled
-     */
-    @Nullable
+    @Override @Nullable
     public Object putByPath(final String path, final Object value) {
         String[] pathArgs = path.split("\\.");
         String lastArg = pathArgs[pathArgs.length - 1];
@@ -50,12 +46,7 @@ public class MongoDocument {
         }
         return nowDocument.put(lastArg, value);
     }
-
-    /**
-     * 根据给定路径查询对应值
-     * 如果路径不存在则返回null
-     */
-    @Nullable
+    @Override @Nullable
     public Object getByPath(final String path) {
         String[] pathArgs = path.split("\\.");
         String lastArg = pathArgs[pathArgs.length - 1];

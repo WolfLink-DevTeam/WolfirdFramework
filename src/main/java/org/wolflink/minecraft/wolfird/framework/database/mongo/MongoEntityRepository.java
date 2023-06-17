@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * 实体仓库，提供基本的增删改查方法
+ * DAO层实体仓库，提供基本的增删改查方法
  * 实体类中至少有一个元素被 @PrimaryKey 标记
  */
 public class MongoEntityRepository<E> {
