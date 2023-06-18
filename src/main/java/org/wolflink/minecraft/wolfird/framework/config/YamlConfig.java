@@ -6,9 +6,17 @@ import org.wolflink.minecraft.wolfird.framework.Framework;
 
 import java.util.logging.Level;
 
+/**
+ * 基于 Yaml 的配置文件
+ */
 public class YamlConfig extends BaseConfig {
 
     FileConfiguration fileConfiguration;
+
+    public YamlConfig(String configName) {
+        super(configName);
+    }
+
     @Override
     public <T> T get(ConfigProjection configProjection) {
         try {

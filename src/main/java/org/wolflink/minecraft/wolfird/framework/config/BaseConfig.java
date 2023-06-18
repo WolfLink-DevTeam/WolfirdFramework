@@ -6,6 +6,16 @@ import java.util.EnumMap;
  * Service层通用配置文件类
  */
 public abstract class BaseConfig {
+
+    /**
+     * 配置文件名，如 framework_cfg
+     */
+    protected final String configName;
+
+    public BaseConfig(String configName) {
+        this.configName = configName;
+    }
+
     /**
      * 存放运行时配置文档
      */

@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 /**
+ * 基于 MongoDB 的配置文件
  * 不要使用 Notifier，因为配置数据的加载顺序在Notifier之前，实例化Notifier又依赖配置数据
  */
 public class MongoConfig extends BaseConfig {
@@ -19,6 +20,7 @@ public class MongoConfig extends BaseConfig {
     private final MongoDocumentRepository documentRepo;
 
     public MongoConfig(String table) {
+        super(table);
         documentRepo = new MongoDocumentRepository(table);
     }
 
