@@ -12,7 +12,7 @@ import java.util.logging.Level;
 /**
  * 不要使用 Notifier，因为配置数据的加载顺序在Notifier之前，实例化Notifier又依赖配置数据
  */
-public abstract class MongoConfig extends BaseConfig {
+public class MongoConfig extends BaseConfig {
     /**
      * 文档仓库
      */
@@ -28,8 +28,7 @@ public abstract class MongoConfig extends BaseConfig {
     @Override
     public <T> T get(ConfigProjection configProjection) {
         try {
-            T result = (T) runtimeConfigs.get(configProjection);
-            return result;
+            return (T) runtimeConfigs.get(configProjection);
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
             Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + configProjection.getPath());
