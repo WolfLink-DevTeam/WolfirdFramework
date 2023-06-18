@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
 import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdTabCompleter;
@@ -58,7 +59,7 @@ public final class Framework extends JavaPlugin {
         notifier.info("开始初始化");
         TimingUtil.start("framework_init");
         this.saveDefaultConfig();
-        IOC.getBean(MongoDB.class).setError(false);
+        if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) IOC.getBean(MongoDB.class).setError(false);
         notifier.info("正在加载可用子插件...");
         loadSubPlugins();
         notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") / 1000.0 + " §f秒");
@@ -69,11 +70,14 @@ public final class Framework extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (IOC.getBean(MongoDB.class).isError()) return;
         // 保存配置文件
-        IOC.getBean(FrameworkConfig.class).save();
         notifier.info("开始卸载框架");
-        IOC.getBean(MongoDB.class).close();
+        if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) {
+            if (IOC.getBean(MongoDB.class).isError()) return;
+            IOC.getBean(FrameworkConfig.class).save();
+            IOC.getBean(MongoDB.class).close();
+        }
+        notifier.info("框架已被完全卸载");
     }
 
     private void loadSubPlugins() {

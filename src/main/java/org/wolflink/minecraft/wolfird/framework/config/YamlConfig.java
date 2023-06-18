@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.wolflink.minecraft.wolfird.framework.Framework;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 
 import java.io.File;
 import java.io.IOException;
