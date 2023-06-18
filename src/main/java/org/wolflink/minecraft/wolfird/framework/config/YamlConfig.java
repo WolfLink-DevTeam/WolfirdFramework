@@ -12,7 +12,12 @@ public class YamlConfig extends BaseConfig {
     @Override
     public <T> T get(ConfigProjection configProjection) {
         try {
-            return (T) fileConfiguration.get(configProjection.getPath(),configProjection.getDefaultValue());
+            Object result = fileConfiguration.get(configProjection.getPath());
+            if(result == null) {
+                update(configProjection, configProjection.getDefaultValue());
+                return (T) configProjection.getDefaultValue();
+            }
+            return (T) result;
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
             Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + configProjection.getPath());
