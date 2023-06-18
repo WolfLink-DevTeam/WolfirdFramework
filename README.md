@@ -1,4 +1,5 @@
 # Wolfird - 简洁规范的玩法开发框架
+
 ![banner](https://img1.imgtp.com/2023/05/20/ufE0q6Q8.png)
 ![开源协议](https://img.shields.io/github/license/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
 ![Stars](https://img.shields.io/github/stars/WolfLink-DevTeam/WolfirdFramework?style=for-the-badge)
@@ -6,29 +7,35 @@
 [![Star History Chart](https://api.star-history.com/svg?repos=WolfLink-DevTeam/WolfirdFramework&type=Date)](https://star-history.com/#WolfLink-DevTeam/WolfirdFramework&Date)
 
 ### 简介
+
 &emsp;&emsp;这是一个面向快速上手、敏捷开发的 `Minecraft Bukkit` 插件玩法开发框架，使用了 `MongoDB` 与 `IOC`，对 `Bukkit` 提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
 
 ### 快速使用
-&emsp;&emsp;前往 `Release` 界面下载 Wolfird-Framework 插件，放到服务器的 `plugins` 目录后启动服务器，启动过程中会遇到报错属于正常现象，启动完成后关闭服务器，修改 WolfirdFramework 的配置文件以对接你自己的 `MongoDB`。  
+
+&emsp;&emsp;前往 `Release` 界面下载 Wolfird-Framework 插件，放到服务器的 `plugins` 目录后启动服务器，启动过程中会遇到报错属于正常现象，启动完成后关闭服务器，修改 WolfirdFramework 的配置文件以对接你自己的 `MongoDB`。
 
 > 如果你还没有部署 `MongoDB` 请前往
 > https://www.mongodb.com/try/download/community
 > 下载社区版 `MongoDB` 并安装，相关配置请自行查阅文档。
 
 ### 发布日志
+
 - 2023/5/21 - v1.0.0 首次发布
 - 2023/6/12 - v1.1.0 框架部分底层实现和API重构
 
 ### TODOs
+
 - 把 logo 单独放到配置文件中读取
 - 实现基于 YAML 的数据库系统，不再强制依赖 MongoDB
+- 改进 IOC 容器，支持动态传入 Bean Provider
 - 添加 `Player` 对象相关的封装，以便于更规范地动态修改玩家属性，如 移动速度、生命值、基础伤害、伤害增益...；
 - 编写更加详细的开发 WIKI；
-  
-### 开发者教程
-#### 主类
-&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `SubPlugin`。
 
+### 开发者教程
+
+#### 主类
+
+&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `SubPlugin`。
 
 ```java
 // 这是一个示例模块插件的主类
@@ -38,6 +45,7 @@ public final class WolfirdTestAddon1 extends SubPlugin {
 ```
 
 #### 事件监听器
+
 &emsp;&emsp;不再需要直接实现 `Listener` 接口，而是继承 `WolfirdListener` 抽象类。
 `WolfirdListener` 提供了比 Bukkit 封装的 `Listener` 更加方便的注册和取消注册的方式，只需要调用 `setEnabled()` 方法改变其状态即可，另外事件监听方法仍然需要使用 `@EventHandler` 进行标注。
 如果需要在监听器中使用调度器执行延迟任务或周期任务等，请不要使用 `Bukkit.getScheduler().runTask()` 等方法，而是使用 `WolfirdListener` 内封装的相关方法。
@@ -67,6 +75,7 @@ class Test {
 ```
 
 #### 指令
+
 &emsp;&emsp;只需要实现 `WolfirdCommand` 抽象类，之后调用插件主类(AddonPlugin、ModePlugin、SystemPlugin)的 `registerCommand()` 方法即可注册，不需要再自己实现 `setExecutor` 或编写配置文件等。
 
 ```java
@@ -96,6 +105,7 @@ class Test {
 ```
 
 #### 配置文件
+
 &emsp;&emsp;**主要的配置文件都是存放在 `MongoDB` 中的**，开发者需要创建子插件独立的配置文件时只需要继承 `BaseConfig` 类并创建单例，之后需要给定默认配置清单，包括配置路径、配置值，然后就可以调用封装好的 `load()`、`update()`、`save()` 方法便捷完成配置文件的修改和持久化操作。
 
 ```java
@@ -126,6 +136,7 @@ class Test {
 ```
 
 #### 数据库
+
 &emsp;&emsp;数据库部分主要指的是POJO映射，框架封装了一个 `EntityRepository<E>` 类，泛型类型 `E` 作为其实体类。该实体类**必须**有以下特点：
 
 1. 由 `@Data` 注解标注，或手动实现其所有的 `get`、`set`、`hash` 等基本数据方法;
@@ -160,6 +171,7 @@ class Test {
 ```
 
 #### 日志
+
 &emsp;&emsp;提供了便捷的 `SubPluginNotifier` 封装，继承自 `BaseNotifier`，前缀名称通过 `plugin.yml` 中的 `prefix` 配置项进行设置，可以带有颜色，如 `§9Wolfird`。通过子插件主类的 `notifier` 成员变量获取消息通知器。
 
 > 颜色代码详见：
