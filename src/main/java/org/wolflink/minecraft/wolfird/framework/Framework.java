@@ -13,7 +13,9 @@ import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -23,42 +25,22 @@ public final class Framework extends JavaPlugin {
 
     @Getter
     private static Framework instance;
-    /**
-     * 插件描述信息，详见 plugin.yml
-     */
-    private final @Getter PluginDescriptionFile info;
     private final @Getter FrameworkNotifier notifier;
+    private final File bannerFile;
 
     public Framework() {
         instance = this;
-        info = getInfo();
         // 首先加载配置文件
         IOC.getBean(FrameworkConfig.class).load();
         notifier = IOC.getBean(FrameworkNotifier.class);
+        bannerFile = new File(getDataFolder(),"banner.txt");
     }
-
-    private void showBanner() {
-        //TODO：里面的版本信息得用字符串变量替换！
-        notifier.custom("""
-
-
-
-                ██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗
-                ██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] WolfLink-DevTeam
-                ██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║
-                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] 1.1.0 - SNAPSHOT
-                ╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝
-                 ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝
-
-                """);
-    }
-
     @Override
     public void onEnable() {
         showBanner();
         notifier.info("开始初始化");
         TimingUtil.start("framework_init");
-        this.saveDefaultConfig();
+//        this.saveDefaultConfig();
         if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) IOC.getBean(MongoDB.class).setError(false);
         notifier.info("正在加载可用子插件...");
         loadSubPlugins();
@@ -84,5 +66,49 @@ public final class Framework extends JavaPlugin {
         File subPluginFolder = new File(this.getDataFolder().getPath(), "sub-plugin");
         if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
         Bukkit.getPluginManager().loadPlugins(subPluginFolder);
+    }
+    private void createBannerFile() {
+        try {
+            bannerFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(bannerFile);
+            fos.write("""
+
+
+                ██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗
+                ██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] %author%
+                ██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║
+                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] %version%
+                ╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝
+                 ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝
+
+                """.getBytes());
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            notifier.error("在创建 banner.txt 文件时遇到了问题，请查看上方详细错误信息。");
+        }
+    }
+    private void showBanner() {
+        if(!bannerFile.exists()) {
+            createBannerFile();
+        }
+        List<String> bannerText = new ArrayList<>();
+        try {
+            FileInputStream fis = new FileInputStream(bannerFile);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            for (String line = br.readLine();line != null;line = br.readLine()) {
+                if(line.contains("%")) {
+                    line = line.replaceAll("%author%","WolfLink - DevTeam");
+                    line = line.replaceAll("%version%", getDescription().getVersion());
+                }
+                bannerText.add(line);
+            }
+            br.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            notifier.error("在读取 banner.txt 文件时遇到了问题，请查看上方详细错误信息。");
+        }
+        bannerText.forEach(notifier::custom);
     }
 }
