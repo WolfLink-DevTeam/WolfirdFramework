@@ -14,14 +14,14 @@ public class IOC {
 
     // 存储单例对象的映射表
     private static final ConcurrentHashMap<Class<?>, Object> singletonMap = new ConcurrentHashMap<>();
-    // 存储当前正在创建的类
-    private static final Map<Long, ArrayDeque<Class<?>>> busyClassMap = new ConcurrentHashMap<>();
+    // 存储所有线程的busyClass堆栈的映射表
+    private static final ConcurrentHashMap<Long, ArrayDeque<Class<?>>> busyClassMap = new ConcurrentHashMap<>();
 
     // 常量定义
     private static final String LOOPBACK_ERROR = "不允许回环依赖注入: ";
     private static final String NULL_RESULT = " 实例化结果为 null";
 
-    // 添加一个私有构造器，防止实例化工具类
+    // 添加私有constructor防止实例化工具类
     private IOC() {
         throw new IllegalStateException("Utility class");
     }
@@ -62,6 +62,7 @@ public class IOC {
         return result;
     }
 
+    // 获取当前线程的busyClass堆栈，实际上是一个ArrayDeque
     @Nonnull
     private static ArrayDeque<Class<?>> getBusyClasses() {
         return busyClassMap.computeIfAbsent(Thread.currentThread().getId(), k -> new ArrayDeque<>());
