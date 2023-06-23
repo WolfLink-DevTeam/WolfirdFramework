@@ -8,7 +8,7 @@
 
 ### 简介
 
-&emsp;&emsp;这是一个面向快速上手、敏捷开发的 `Minecraft Bukkit` 插件玩法开发框架，使用了 `MongoDB` 与 `IOC`，对 `Bukkit` 提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
+&emsp;&emsp;这是一个面向快速上手、敏捷开发的 `Minecraft Bukkit` 插件玩法开发框架，使用了 `MongoDB` 与 `IOC.IOC`，对 `Bukkit` 提供的一些原生功能进行了二次封装，以便更快地进行子插件的开发。
 
 ### 快速使用
 
@@ -27,7 +27,7 @@
 
 - 把 logo 单独放到配置文件中读取
 - 实现基于 YAML 的数据库系统，不再强制依赖 MongoDB
-- 改进 IOC 容器，支持动态传入 Bean Provider
+- 改进 IOC.IOC 容器，支持动态传入 Bean Provider
 - 添加 `Player` 对象相关的封装，以便于更规范地动态修改玩家属性，如 移动速度、生命值、基础伤害、伤害增益...；
 - 编写更加详细的开发 WIKI；
 
