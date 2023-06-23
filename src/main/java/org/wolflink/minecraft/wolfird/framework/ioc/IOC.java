@@ -7,7 +7,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-
 public class IOC {
 
     // 存储单例对象的映射表
@@ -43,8 +42,10 @@ public class IOC {
     /**
      * 传入 Bean 配置类，通过反射扫描获取其中的 BeanProvider 注解获取提供者方法
      * 将方法封装到 Supplier
-      */
-    public static void registerBeanConfiguration(Object beanConfig) {
+     * 目前只支持通过类型识别对应的 BeanProvider
+     * 也就是相同类型的提供方法只应该存在一个，否则会出现被覆盖的情况
+     */
+    public static void registerBeanConfig(Object beanConfig) {
         Class<?> beanConfigClass = beanConfig.getClass();
         Arrays.stream(beanConfigClass.getDeclaredMethods()).forEach(method -> {
             if(Arrays.stream(method.getDeclaredAnnotations()).anyMatch(it -> it.annotationType().equals(BeanProvider.class))) {
@@ -64,6 +65,20 @@ public class IOC {
                     }
                     return null;
                 });
+            }
+        });
+    }
+
+    /**
+     * 传入 Bean 配置类，通过反射扫描获取其中的 BeanProvider 注解获取提供者方法
+     * 从 Supplier 集合中删除对应类型的提供者
+     * 如果存在冲突的配置类，则可能出现一些问题
+     */
+    public static void unregisterBeanConfig(Object beanConfig) {
+        Class<?> beanConfigClass = beanConfig.getClass();
+        Arrays.stream(beanConfigClass.getDeclaredMethods()).forEach(method -> {
+            if(Arrays.stream(method.getDeclaredAnnotations()).anyMatch(it -> it.annotationType().equals(BeanProvider.class))) {
+                beanProviders.remove(method.getReturnType());
             }
         });
     }
