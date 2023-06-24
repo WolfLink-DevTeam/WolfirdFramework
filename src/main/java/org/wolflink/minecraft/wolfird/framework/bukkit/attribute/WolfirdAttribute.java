@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
 import org.wolflink.minecraft.wolfird.framework.Framework;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.common.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 
 import java.util.Map;

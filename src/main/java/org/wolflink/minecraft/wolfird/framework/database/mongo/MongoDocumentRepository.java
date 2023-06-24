@@ -6,7 +6,7 @@ import com.mongodb.lang.NonNull;
 import lombok.Getter;
 import org.bson.Document;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.common.ioc.IOC;
 
 /**
  * DAO层结构不规则的文档仓库

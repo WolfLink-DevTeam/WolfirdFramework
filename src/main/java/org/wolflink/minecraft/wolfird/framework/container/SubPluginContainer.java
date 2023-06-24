@@ -2,6 +2,7 @@ package org.wolflink.minecraft.wolfird.framework.container;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
+import org.wolflink.common.ioc.Singleton;
 import org.wolflink.minecraft.wolfird.framework.SubPlugin;
 
 import javax.annotation.Nonnull;
@@ -9,6 +10,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
+@Singleton
 public class SubPluginContainer {
 
     /**

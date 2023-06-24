@@ -5,8 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.wolflink.minecraft.wolfird.framework.bukkit.TNode;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.Inject;
-import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.common.ioc.Inject;
+import org.wolflink.common.ioc.Singleton;
 
 import java.util.ArrayList;
 import java.util.Arrays;

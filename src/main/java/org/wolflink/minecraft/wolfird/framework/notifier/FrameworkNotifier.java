@@ -1,7 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
 
-import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.common.ioc.Singleton;
 
 @Singleton
 public class FrameworkNotifier extends BaseNotifier {

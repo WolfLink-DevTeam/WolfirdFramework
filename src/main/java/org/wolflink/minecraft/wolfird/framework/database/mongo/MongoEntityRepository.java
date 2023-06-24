@@ -8,7 +8,7 @@ import org.bson.Document;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
 import org.wolflink.minecraft.wolfird.framework.annotations.MongoTable;
 import org.wolflink.minecraft.wolfird.framework.annotations.PrimaryKey;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.common.ioc.IOC;
 
 import java.lang.reflect.Field;
 import java.util.List;

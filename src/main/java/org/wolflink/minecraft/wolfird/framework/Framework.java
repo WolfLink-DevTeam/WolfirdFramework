@@ -2,10 +2,9 @@ package org.wolflink.minecraft.wolfird.framework;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.wolflink.common.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdTabCompleter;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
