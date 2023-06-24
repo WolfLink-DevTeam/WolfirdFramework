@@ -28,6 +28,8 @@
 - ~~把 logo 单独放到配置文件中读取~~
 - ~~实现基于 YAML 的数据库系统，不再强制依赖 MongoDB~~
 - ~~改进 IOC.IOC 容器，支持动态传入 Bean Provider~~
+- 将 IOC 模块单独抽离出去维护
+- 将项目名称由 `Wolfird Framework` 更改为 `WolfLink Framework`(`Wolfird`本来是留给一个小游戏的名字)
 - 添加 `Player` 对象相关的封装，以便于更规范地动态修改玩家属性，如 移动速度、生命值、基础伤害、伤害增益...；
 - 编写更加详细的开发 WIKI；
 
