@@ -59,6 +59,10 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
@@ -73,6 +77,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.github.WolfLink-DevTeam</groupId>
+            <artifactId>WolfLink-IOC</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -100,10 +110,10 @@
             <artifactId>mongodb-crypt</artifactId>
             <version>1.6.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.wolflink.common</groupId>
-            <artifactId>WolfLink-IOC</artifactId>
-            <version>1.0.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.wolflink.common</groupId>-->
+<!--            <artifactId>WolfLink-IOC</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>
