@@ -11,6 +11,7 @@ import org.wolflink.common.ioc.Singleton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Singleton
@@ -26,6 +27,6 @@ public class WolfirdTabCompleter implements TabCompleter {
         if (wolfird == null) return result;
         TNode<String> node = wolfird.getByPath(args);
         if (node == null) return result;
-        return node.getKeys().stream().toList();
+        return new ArrayList<>(node.getKeys());
     }
 }
