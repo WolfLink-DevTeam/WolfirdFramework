@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 泛型节点类
@@ -57,7 +58,7 @@ public class TNode<T> {
     }
 
     public void pathRef(T[] pathValues) {
-        pathRef(Arrays.stream(pathValues).map(TNode::new).toList());
+        pathRef(Arrays.stream(pathValues).map(TNode::new).collect(Collectors.toList()));
     }
 
     /**
