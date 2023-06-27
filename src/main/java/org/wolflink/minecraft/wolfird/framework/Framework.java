@@ -62,7 +62,7 @@ public final class Framework extends JavaPlugin {
     }
 
     private void loadSubPlugins() {
-        File subPluginFolder = new File(this.getDataFolder().getPath(), "sub-plugin");
+        File subPluginFolder = new File(this.getDataFolder().getPath(), "plugins");
         if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
         Bukkit.getPluginManager().loadPlugins(subPluginFolder);
     }
