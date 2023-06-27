@@ -12,29 +12,30 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-// TODO 还应该提供对 SchedulerTask 相关的封装，否则在监听器禁用时这些任务仍在执行，不符合逻辑
-public abstract class WolfirdListener implements Listener {
+public abstract class WolfirdListener implements Listener, IScheduler {
 
     private boolean enabled = false;
-    /**
-     * 存储该监听器涉及到的所有调度器任务，以便于禁用监听器时注销所有任务
-     */
-    private final Set<Integer> taskIdSet = new HashSet<>();
 
+    private final SubScheduler subScheduler = new SubScheduler();
+
+    @Override
     public void runTaskLater(Runnable runnable, long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getInstance(), runnable, delay).getTaskId());
+        subScheduler.runTaskLater(runnable, delay);
     }
 
+    @Override
     public void runTaskLaterAsync(Runnable runnable, long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(), runnable, delay).getTaskId());
+        subScheduler.runTaskLaterAsync(runnable, delay);
     }
 
+    @Override
     public void runTaskTimer(Runnable runnable, long delay, long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getInstance(), runnable, delay, period).getTaskId());
+        subScheduler.runTaskTimer(runnable, delay, period);
     }
 
+    @Override
     public void runTaskTimerAsync(Runnable runnable, long delay, long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(), runnable, delay, period).getTaskId());
+        subScheduler.runTaskTimerAsync(runnable, delay, period);
     }
 
     public void setEnabled(final boolean enabled) {
@@ -47,7 +48,7 @@ public abstract class WolfirdListener implements Listener {
         // 从启用到禁用
         else {
             // 取消所有还未完成的任务
-            taskIdSet.forEach(id -> Bukkit.getScheduler().cancelTask(id));
+            subScheduler.cancelAllTasks();
             Set<Class<Event>> eventClasses = new HashSet<>();
 
             for (Method method : getClass().getDeclaredMethods()) {
