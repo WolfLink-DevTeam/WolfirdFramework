@@ -22,6 +22,12 @@ public class YamlConfig extends BaseConfig {
         super(configName);
         if(!frameworkCfgFolder.exists())frameworkCfgFolder.mkdirs();
         configFile = new File(frameworkCfgFolder,configName+".yml");
+        try {
+            if(!configFile.exists())configFile.createNewFile();
+        } catch (IOException e) {
+            Framework.getInstance().getNotifier().error("在尝试保存配置文件 "+configFile.getName()+" 时出现了问题。");
+        }
+
     }
 
     @Override
