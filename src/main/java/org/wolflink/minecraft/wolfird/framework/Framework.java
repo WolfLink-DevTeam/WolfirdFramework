@@ -70,17 +70,15 @@ public final class Framework extends JavaPlugin {
         try {
             bannerFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(bannerFile);
-            fos.write("""
-
-
-                ██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗
-                ██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] %author%
-                ██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║
-                ██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] %version%
-                ╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝
-                 ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝
-
-                """.getBytes());
+            fos.write("\n".getBytes());
+            fos.write("\n".getBytes());
+            fos.write("██╗    ██╗ ██████╗ ██╗     ███████╗██╗██████╗ ██████╗\n".getBytes());
+            fos.write("██║    ██║██╔═══██╗██║     ██╔════╝██║██╔══██╗██╔══██╗  [ Author ] %author%\n".getBytes());
+            fos.write("██║ █╗ ██║██║   ██║██║     █████╗  ██║██████╔╝██║  ██║\n".getBytes());
+            fos.write("██║███╗██║██║   ██║██║     ██╔══╝  ██║██╔══██╗██║  ██║  [ Version ] %version%\n".getBytes());
+            fos.write("╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝\n".getBytes());
+            fos.write(" ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝\n".getBytes());
+            fos.write("\n".getBytes());
             fos.close();
         } catch (IOException e) {
             e.printStackTrace();
