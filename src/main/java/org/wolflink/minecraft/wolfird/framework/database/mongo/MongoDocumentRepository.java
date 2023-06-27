@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.mongo;
+package org.wolflink.minecraft.wolfird.framework.database.mongo;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
@@ -6,18 +6,19 @@ import com.mongodb.lang.NonNull;
 import lombok.Getter;
 import org.bson.Document;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.common.ioc.IOC;
 
 /**
- * 结构不规则的文档仓库
+ * DAO层结构不规则的文档仓库
+ * 包含若干个结构不一致的文档
  */
-public class DocumentRepository {
+public class MongoDocumentRepository {
     private @Getter
     final String table;
     private @Getter
     final MongoCollection<Document> collection;
 
-    public DocumentRepository(String table) {
+    public MongoDocumentRepository(String table) {
         this.table = table;
         collection = IOC.getBean(MongoDB.class).getDatabase().getCollection(table);
         collection.createIndex(new Document("documentName", 1), new IndexOptions().unique(true));
@@ -31,13 +32,13 @@ public class DocumentRepository {
      * @return WolfDocument对象
      */
     @NonNull
-    public WolfDocument findByDocumentName(String documentName) {
+    public MongoDocument findByDocumentName(String documentName) {
         Document document = collection.find(new Document("documentName", documentName)).first();
         if (document == null) {
-            WolfDocument wolfDocument = new WolfDocument(documentName);
-            collection.insertOne(wolfDocument.toDocument());
-            return wolfDocument;
-        } else return new WolfDocument(document);
+            MongoDocument mongoDocument = new MongoDocument(documentName);
+            collection.insertOne(mongoDocument.toDocument());
+            return mongoDocument;
+        } else return new MongoDocument(document);
     }
 
     /**
@@ -50,9 +51,9 @@ public class DocumentRepository {
      * @param value        值
      */
     public void updateValue(String documentName, String path, Object value) {
-        WolfDocument wolfDocument = findByDocumentName(documentName);
-        wolfDocument.putByPath(path, value);
-        collection.updateOne(new Document("documentName", documentName), new Document("$set", wolfDocument.toDocument()));
+        MongoDocument mongoDocument = findByDocumentName(documentName);
+        mongoDocument.putByPath(path, value);
+        collection.updateOne(new Document("documentName", documentName), new Document("$set", mongoDocument.toDocument()));
     }
 
     /**
@@ -66,12 +67,12 @@ public class DocumentRepository {
      */
     @NonNull
     public Object getValue(String documentName, String path, Object defaultValue) {
-        WolfDocument wolfDocument = findByDocumentName(documentName);
-        Object result = wolfDocument.getByPath(path);
+        MongoDocument mongoDocument = findByDocumentName(documentName);
+        Object result = mongoDocument.getByPath(path);
         if (result == null) {
-            wolfDocument.putByPath(path, defaultValue);
+            mongoDocument.putByPath(path, defaultValue);
             result = defaultValue;
-            collection.updateOne(new Document("documentName", documentName), new Document("$set", wolfDocument.toDocument()));
+            collection.updateOne(new Document("documentName", documentName), new Document("$set", mongoDocument.toDocument()));
         }
         return result;
     }

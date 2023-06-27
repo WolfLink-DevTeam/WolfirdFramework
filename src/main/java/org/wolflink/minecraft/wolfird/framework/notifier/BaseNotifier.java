@@ -8,7 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.common.ioc.IOC;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

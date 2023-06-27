@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.mongo;
+package org.wolflink.minecraft.wolfird.framework.database.mongo;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
@@ -6,16 +6,18 @@ import com.mongodb.lang.Nullable;
 import lombok.Getter;
 import org.bson.Document;
 import org.wolflink.minecraft.wolfird.framework.MongoDB;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
+import org.wolflink.minecraft.wolfird.framework.annotations.MongoTable;
+import org.wolflink.minecraft.wolfird.framework.annotations.PrimaryKey;
+import org.wolflink.common.ioc.IOC;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * 实体仓库，提供基本的增删改查方法
+ * DAO层实体仓库，提供基本的增删改查方法
  * 实体类中至少有一个元素被 @PrimaryKey 标记
  */
-public class EntityRepository<E> {
+public class MongoEntityRepository<E> {
     private @Getter String table = null;
     private @Getter
     final MongoCollection<E> collection;
@@ -24,7 +26,7 @@ public class EntityRepository<E> {
     // 主键名(主键也只允许String类型)
     private @Getter String primaryKey = null;
 
-    public EntityRepository(Class<E> entityClass) {
+    public MongoEntityRepository(Class<E> entityClass) {
         this.entityClass = entityClass;
         if (entityClass.getAnnotation(MongoTable.class) != null) {
             this.table = entityClass.getAnnotation(MongoTable.class).name();

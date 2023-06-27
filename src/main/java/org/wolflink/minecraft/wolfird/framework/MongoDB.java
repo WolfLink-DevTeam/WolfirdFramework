@@ -12,7 +12,7 @@ import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bukkit.Bukkit;
-import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.common.ioc.Singleton;
 
 import java.util.function.Consumer;
 import java.util.logging.Level;

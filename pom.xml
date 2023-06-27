@@ -6,13 +6,13 @@
 
     <groupId>org.wolflink.minecraft.wolfird</groupId>
     <artifactId>wolfird-framework</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
 
     <name>WolfirdFramework</name>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -59,6 +59,10 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
@@ -74,9 +78,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.github.WolfLink-DevTeam</groupId>
+            <artifactId>WolfLink-IOC</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -100,5 +110,10 @@
             <artifactId>mongodb-crypt</artifactId>
             <version>1.6.1</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.wolflink.common</groupId>-->
+<!--            <artifactId>WolfLink-IOC</artifactId>-->
+<!--            <version>1.0.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

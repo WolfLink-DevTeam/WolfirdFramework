@@ -7,6 +7,7 @@ import lombok.Getter;
  * 存储配置路径和默认配置值
  */
 public enum ConfigProjection {
+    MONGO_ENABLED("mongo.enabled",false),
     MONGO_URL("mongo.connectionUrl", "mongodb://localhost:27017/"),
     MONGO_DB_NAME("mongo.databaseName", "wolfird_db"),
     NOTIFIER_COLORFUL_CONSOLE("notifier.colorful_console", true),

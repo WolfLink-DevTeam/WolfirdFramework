@@ -4,8 +4,8 @@ import lombok.Getter;
 import org.wolflink.minecraft.wolfird.framework.bukkit.TNode;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.command.CmdHelp;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
-import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.common.ioc.IOC;
+import org.wolflink.common.ioc.Singleton;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -5,8 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
-import org.wolflink.minecraft.wolfird.framework.ioc.IOC;
-import org.wolflink.minecraft.wolfird.framework.ioc.Singleton;
+import org.wolflink.common.ioc.IOC;
+import org.wolflink.common.ioc.Singleton;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 
