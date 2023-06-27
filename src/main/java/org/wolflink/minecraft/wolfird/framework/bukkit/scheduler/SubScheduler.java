@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.bukkit;
+package org.wolflink.minecraft.wolfird.framework.bukkit.scheduler;
 
 import org.bukkit.Bukkit;
 import org.wolflink.minecraft.wolfird.framework.Framework;

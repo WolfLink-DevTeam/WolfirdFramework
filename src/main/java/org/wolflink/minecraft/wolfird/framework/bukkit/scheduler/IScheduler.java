@@ -1,4 +1,4 @@
-package org.wolflink.minecraft.wolfird.framework.bukkit;
+package org.wolflink.minecraft.wolfird.framework.bukkit.scheduler;
 
 /**
  * 具有任务调度功能的接口

@@ -6,6 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.wolflink.minecraft.wolfird.framework.Framework;
+import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.IScheduler;
+import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.SubScheduler;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
