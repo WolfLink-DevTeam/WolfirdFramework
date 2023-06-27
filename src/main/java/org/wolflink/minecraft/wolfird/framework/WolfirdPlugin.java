@@ -12,7 +12,7 @@ import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
 /**
  * 代表一个 Wolfird 子插件
  */
-public abstract class SubPlugin extends JavaPlugin {
+public abstract class WolfirdPlugin extends JavaPlugin {
     /**
      * 插件描述信息，详见 plugin.yml
      */
@@ -20,12 +20,12 @@ public abstract class SubPlugin extends JavaPlugin {
 
     protected final @Getter SubPluginNotifier notifier;
 
-    protected final @Getter SubPluginContainer container;
+    protected final @Getter WolfirdPluginContainer container;
 
-    public SubPlugin() {
+    public WolfirdPlugin() {
         this.info = getDescription();
         this.notifier = new SubPluginNotifier(info.getPrefix());
-        this.container = IOC.getBean(SubPluginContainer.class);
+        this.container = IOC.getBean(WolfirdPluginContainer.class);
     }
 
     // TODO 应该再弄个列表存储某个子插件注册的所有指令，在插件卸载时把那些指令全部注销
@@ -50,7 +50,7 @@ public abstract class SubPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         notifier.info("正在向框架注册该系统插件...");
-        if (container.registerSubPlugin(info.getName(), this)) {
+        if (container.registerPlugin(info.getName(), this)) {
             notifier.info("注册完成");
         } else notifier.error("注册失败");
     }
@@ -61,7 +61,7 @@ public abstract class SubPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         notifier.info("正在向框架注销该系统插件...");
-        if (container.unregisterSubPlugin(info.getName(), this)) {
+        if (container.unregisterPlugin(info.getName(), this)) {
             notifier.info("注销完成");
         } else notifier.error("注销失败");
     }

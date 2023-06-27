@@ -3,7 +3,7 @@ package org.wolflink.minecraft.wolfird.framework.container;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.wolflink.common.ioc.Singleton;
-import org.wolflink.minecraft.wolfird.framework.SubPlugin;
+import org.wolflink.minecraft.wolfird.framework.WolfirdPlugin;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -11,21 +11,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Singleton
-public class SubPluginContainer {
+public class WolfirdPluginContainer {
 
     /**
      * 容器管理的子插件对象引用列表
      * 以插件名作为索引(不是全名，便于Bukkit查找)
      */
-    private final Map<String, SubPlugin> pluginItems = new HashMap<>();
+    private final Map<String, WolfirdPlugin> pluginItems = new HashMap<>();
 
-    public boolean registerSubPlugin(@Nonnull String name, @Nonnull SubPlugin instance) {
+    public boolean registerPlugin(@Nonnull String name, @Nonnull WolfirdPlugin instance) {
         if (pluginItems.containsKey(name)) return false;
         pluginItems.put(name, instance);
         return true;
     }
 
-    public boolean unregisterSubPlugin(@Nonnull String name, @Nonnull SubPlugin instance) {
+    public boolean unregisterPlugin(@Nonnull String name, @Nonnull WolfirdPlugin instance) {
         if (pluginItems.containsKey(name) && pluginItems.containsValue(instance)) {
             pluginItems.remove(name);
             return true;
@@ -33,7 +33,7 @@ public class SubPluginContainer {
     }
 
     @Nullable
-    public SubPlugin getSubPlugin(String name) {
+    public WolfirdPlugin getPlugin(String name) {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(name);
         if (plugin == null || !plugin.isEnabled()) return null;
         return pluginItems.get(name);
