@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 /**
- * 基于 MongoDB 的配置文件
+ * 基于 MongoDB 的配置文件(并不通用)
  * 不要使用 Notifier，因为配置数据的加载顺序在Notifier之前，实例化Notifier又依赖配置数据
  */
 public class MongoConfig extends BaseConfig {
@@ -19,8 +19,8 @@ public class MongoConfig extends BaseConfig {
      */
     private final MongoDocumentRepository documentRepo;
 
-    public MongoConfig(String table) {
-        super(table);
+    public MongoConfig(String table,Map<String,Object> defaultConfig) {
+        super(table,defaultConfig);
         documentRepo = new MongoDocumentRepository(table);
     }
 
@@ -28,12 +28,12 @@ public class MongoConfig extends BaseConfig {
      * 获取运行时配置
      */
     @Override
-    public <T> T get(ConfigProjection configProjection) {
+    public <T> T get(String path,Object value) {
         try {
-            return (T) runtimeConfigs.get(configProjection);
+            return (T) runtimeConfigs.get(path);
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
-            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + configProjection.getPath());
+            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关路径：" + path);
             return null;
         }
     }
@@ -42,8 +42,8 @@ public class MongoConfig extends BaseConfig {
      * 修改运行时配置
      */
     @Override
-    public void update(ConfigProjection configProjection, Object value) {
-        runtimeConfigs.put(configProjection, value);
+    public void update(String path,Object value) {
+        runtimeConfigs.put(path,value);
     }
 
     /**
@@ -54,13 +54,13 @@ public class MongoConfig extends BaseConfig {
         Bukkit.getLogger().info("正在从 MongoDB 中加载配置文件...");
         UUID uuid = UUID.randomUUID();
         TimingUtil.start(uuid.toString());
-        for (ConfigProjection configNode : ConfigProjection.values()) {
+        for (Map.Entry<String,Object> entry : defaultConfig.entrySet()) {
             runtimeConfigs.put(
-                    configNode,
+                    entry.getKey(),
                     documentRepo.getValue(
-                            configNode.getDocumentName(),
-                            configNode.getPath(),
-                            configNode.getDefaultValue()
+                            configName,
+                            entry.getKey(),
+                            entry.getValue()
                     )
             );
         }
@@ -75,13 +75,18 @@ public class MongoConfig extends BaseConfig {
         Bukkit.getLogger().info("正在向 MongoDB 中保存配置文件...");
         UUID uuid = UUID.randomUUID();
         TimingUtil.start(uuid.toString());
-        for (Map.Entry<ConfigProjection, Object> entry : runtimeConfigs.entrySet()) {
+        for (Map.Entry<String, Object> entry : runtimeConfigs.entrySet()) {
             documentRepo.updateValue(
-                    entry.getKey().getDocumentName(),
-                    entry.getKey().getPath(),
+                    configName,
+                    entry.getKey(),
                     entry.getValue()
             );
         }
         Bukkit.getLogger().info("配置文件保存完成，用时 " + TimingUtil.finish(uuid.toString()) / 1000.0 + " 秒");
+    }
+
+    @Override
+    public void initDefault() {
+
     }
 }

@@ -7,6 +7,7 @@ import org.wolflink.minecraft.wolfird.framework.Framework;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -18,37 +19,32 @@ public class YamlConfig extends BaseConfig {
     private final File configFile;
     FileConfiguration fileConfiguration;
 
-    public YamlConfig(String configName) {
-        super(configName);
+    public YamlConfig(String configName, Map<String,Object> defaultConfig) {
+        super(configName,defaultConfig);
         if(!frameworkCfgFolder.exists())frameworkCfgFolder.mkdirs();
         configFile = new File(frameworkCfgFolder,configName+".yml");
-        try {
-            if(!configFile.exists())configFile.createNewFile();
-        } catch (IOException e) {
-            Framework.getInstance().getNotifier().error("在尝试保存配置文件 "+configFile.getName()+" 时出现了问题。");
-        }
-
+        if(!configFile.exists())initDefault();
     }
 
     @Override
-    public <T> T get(ConfigProjection configProjection) {
+    public <T> T get(String path, Object value) {
         try {
-            Object result = fileConfiguration.get(configProjection.getPath());
+            Object result = fileConfiguration.get(path);
             if(result == null) {
-                update(configProjection, configProjection.getDefaultValue());
-                return (T) configProjection.getDefaultValue();
+                update(path, value);
+                return (T) value;
             }
             return (T) result;
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
-            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + configProjection.getPath());
+            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + path);
             return null;
         }
     }
 
     @Override
-    public void update(ConfigProjection configProjection, Object value) {
-        fileConfiguration.set(configProjection.getPath(),value);
+    public void update(String path, Object value) {
+        fileConfiguration.set(path,value);
     }
 
     @Override
@@ -66,5 +62,18 @@ public class YamlConfig extends BaseConfig {
                     .error("在尝试保存配置文件 "+configName+" 时出现了异常，请查看上方详细错误信息。");
         }
 
+    }
+
+    @Override
+    public void initDefault() {
+        try {
+            load();
+            configFile.createNewFile();
+            defaultConfig.forEach(this::update);
+            save();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Framework.getInstance().getNotifier().error("在尝试保存配置文件 "+configFile.getName()+" 时出现了问题。");
+        }
     }
 }
