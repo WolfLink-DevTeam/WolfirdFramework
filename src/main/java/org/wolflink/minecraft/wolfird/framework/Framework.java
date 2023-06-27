@@ -41,8 +41,8 @@ public final class Framework extends JavaPlugin {
         TimingUtil.start("framework_init");
 //        this.saveDefaultConfig();
         if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) IOC.getBean(MongoDB.class).setError(false);
-        notifier.info("正在加载可用子插件...");
-        loadSubPlugins();
+//        notifier.info("正在加载可用子插件...");
+//        loadSubPlugins();
         notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") / 1000.0 + " §f秒");
         Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
         Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
@@ -61,11 +61,11 @@ public final class Framework extends JavaPlugin {
         notifier.info("框架已被完全卸载");
     }
 
-    private void loadSubPlugins() {
-        File subPluginFolder = new File(this.getDataFolder().getPath(), "plugins");
-        if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
-        Bukkit.getPluginManager().loadPlugins(subPluginFolder);
-    }
+//    private void loadSubPlugins() {
+//        File subPluginFolder = new File(this.getDataFolder().getPath(), "plugins");
+//        if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
+//        Bukkit.getPluginManager().loadPlugins(subPluginFolder);
+//    }
     private void createBannerFile() {
         try {
             bannerFile.createNewFile();

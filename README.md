@@ -50,7 +50,7 @@
     <scope>provided</scope>
 </dependency>
 ```
-&emsp;&emsp;在`maven`配置文件`pom.xml`中添加上述代码后即可引入`Wolfird Framework`开发框架。在使用时需要先安装`Wolfird-Framework`框架插件，再安装其子插件到服务端目录`/plugins/WolfirdFramework/plugins/`路径下即可。
+&emsp;&emsp;在`maven`配置文件`pom.xml`中添加上述代码后即可引入`Wolfird Framework`开发框架。
 #### 主类
 
 &emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `SubPlugin`。
