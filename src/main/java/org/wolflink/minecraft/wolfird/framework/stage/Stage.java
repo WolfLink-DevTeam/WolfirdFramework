@@ -1,34 +1,49 @@
 package org.wolflink.minecraft.wolfird.framework.stage;
 
-public abstract class Stage {
-    private final long taskPeriod;
-    private final String stageName;
-    private final String stageDisplayName;
+import lombok.Getter;
+import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.IScheduler;
+import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.SubScheduler;
 
-    public Stage(long taskPeriod,String stageName,String stageDisplayName) {
-        this.taskPeriod = taskPeriod;
-        this.stageName = stageName;
-        this.stageDisplayName = stageDisplayName;
+public abstract class Stage implements IScheduler {
+    @Getter
+    private final String displayName;
+    private final SubScheduler subScheduler;
+
+    public Stage(String displayName) {
+        this.displayName = displayName;
+        subScheduler = new SubScheduler();
     }
-    void start() {
+
+    /**
+     * 开始阶段
+     */
+    public void enter() {
         onEnter();
     }
-    void end() {
 
+    /**
+     * 离开阶段
+     */
+    public void leave() {
+        subScheduler.cancelAllTasks();
+        onLeave();
     }
-
-    /**
-     * 在进入阶段时调用
-     */
-    abstract void onEnter();
-
-    /**
-     * 在离开阶段时调用
-     */
-    abstract void onLeave();
-
-    /**
-     * 在阶段过程中循环调用
-     */
-    abstract void timerTask();
+    protected abstract void onEnter();
+    protected abstract void onLeave();
+    @Override
+    public void runTaskLater(Runnable runnable, long delay) {
+        subScheduler.runTaskLater(runnable,delay);
+    }
+    @Override
+    public void runTaskLaterAsync(Runnable runnable, long delay) {
+        subScheduler.runTaskLaterAsync(runnable,delay);
+    }
+    @Override
+    public void runTaskTimer(Runnable runnable, long delay, long period) {
+        subScheduler.runTaskTimer(runnable,delay,period);
+    }
+    @Override
+    public void runTaskTimerAsync(Runnable runnable, long delay, long period) {
+        subScheduler.runTaskTimerAsync(runnable,delay,period);
+    }
 }
