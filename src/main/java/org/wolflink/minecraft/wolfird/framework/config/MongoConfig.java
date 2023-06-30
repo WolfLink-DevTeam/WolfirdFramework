@@ -28,7 +28,7 @@ public class MongoConfig extends BaseConfig {
      * 获取运行时配置
      */
     @Override
-    public <T> T get(String path,Object value) {
+    public <T> T get(String path) {
         try {
             return (T) runtimeConfigs.get(path);
         } catch (ClassCastException | NullPointerException e) {

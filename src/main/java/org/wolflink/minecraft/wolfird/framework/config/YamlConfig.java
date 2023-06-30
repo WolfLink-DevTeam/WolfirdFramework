@@ -27,19 +27,17 @@ public class YamlConfig extends BaseConfig {
     }
 
     @Override
-    public <T> T get(String path, Object value) {
+    public <T> T get(String path) {
         try {
             Object result = fileConfiguration.get(path);
-            if(result == null) {
-                update(path, value);
-                return (T) value;
-            }
+            if(result == null) return null;
             return (T) result;
         } catch (ClassCastException | NullPointerException e) {
             e.printStackTrace();
             Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + path);
             return null;
         }
+
     }
 
     @Override

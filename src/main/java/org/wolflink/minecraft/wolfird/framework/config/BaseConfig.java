@@ -1,7 +1,11 @@
 package org.wolflink.minecraft.wolfird.framework.config;
 
+import org.bukkit.Bukkit;
+
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Service层通用配置文件类
@@ -26,7 +30,21 @@ public abstract class BaseConfig {
     /**
      * 获取运行时配置
      */
-    public abstract <T> T get(String path, Object value);
+    @Nullable
+    public abstract <T> T get(String path);
+    public <T> T get(String path, Object value) {
+        try {
+            T result = get(path);
+            if(result == null) {
+                update(path, value);
+                return (T) value;
+            } else return result;
+        } catch (ClassCastException | NullPointerException e) {
+            e.printStackTrace();
+            Bukkit.getLogger().log(Level.SEVERE, "在进行类型转换时出现异常，相关信息：" + path);
+            return null;
+        }
+    }
     /**
      * 修改运行时配置
      */
