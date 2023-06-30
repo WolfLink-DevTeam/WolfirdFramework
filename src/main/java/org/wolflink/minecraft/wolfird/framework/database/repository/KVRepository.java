@@ -39,4 +39,7 @@ public abstract class KVRepository<K,V> {
     public Collection<V> findBy(Function<V,Boolean> filter) {
         return findAll().stream().filter(filter::apply).collect(Collectors.toList());
     }
+    public int size() {
+        return findAll().size();
+    }
 }
