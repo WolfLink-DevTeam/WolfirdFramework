@@ -32,6 +32,13 @@ public abstract class BaseConfig {
      */
     @Nullable
     public abstract <T> T get(String path);
+
+    /**
+     * 获取运行时配置
+     * 如果不存在则会返回传入的默认值
+     * 并将该默认值添加到配置文件中
+     */
+    @Nullable
     public <T> T get(String path, Object value) {
         try {
             T result = get(path);
