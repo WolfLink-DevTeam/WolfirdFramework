@@ -24,7 +24,8 @@ public abstract class WolfirdPlugin extends JavaPlugin {
 
     public WolfirdPlugin() {
         this.info = getDescription();
-        this.notifier = new SubPluginNotifier(info.getPrefix());
+        if(info.getPrefix() == null)this.notifier = new SubPluginNotifier(this.getClass().getSimpleName());
+        else this.notifier = new SubPluginNotifier(info.getPrefix());
         this.container = IOC.getBean(WolfirdPluginContainer.class);
     }
 
