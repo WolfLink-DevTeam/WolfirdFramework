@@ -43,7 +43,7 @@ public final class Framework extends JavaPlugin {
         if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) IOC.getBean(MongoDB.class).setError(false);
 //        notifier.info("正在加载可用子插件...");
 //        loadSubPlugins();
-        notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") / 1000.0 + " §f秒");
+        notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") + " §fms");
         Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
         Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
         IOC.getBean(CommandContainer.class).registerCommands();
