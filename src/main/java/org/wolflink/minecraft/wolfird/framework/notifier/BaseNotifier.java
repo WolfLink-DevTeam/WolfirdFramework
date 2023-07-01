@@ -1,6 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.notifier;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -42,7 +43,7 @@ public abstract class BaseNotifier {
         );
     }
 
-    public BaseNotifier(String prefix, String consoleTemplate, String chatTemplate, String notifyTemplate, boolean colorfulConsole) {
+    public BaseNotifier(@NonNull String prefix, String consoleTemplate, String chatTemplate, String notifyTemplate, boolean colorfulConsole) {
         this.prefix = prefix;
         this.consoleTemplate = consoleTemplate;
         this.chatTemplate = chatTemplate;
