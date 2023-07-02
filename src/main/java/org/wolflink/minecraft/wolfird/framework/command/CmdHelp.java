@@ -5,18 +5,16 @@ import org.bukkit.command.CommandSender;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.common.ioc.Inject;
-import org.wolflink.common.ioc.Singleton;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 
-@Singleton
 public class CmdHelp extends WolfirdCommand {
     @Inject
     private FrameworkNotifier notifier;
     @Inject
     private CommandContainer commandContainer;
 
-    public CmdHelp() {
-        super(false, true, true, "wolfird help", "查看Wolfird框架插件帮助");
+    public CmdHelp(String mainCommand) {
+        super(false, true, true, mainCommand+" help", "查看 "+mainCommand+" 插件帮助");
     }
 
     @Override

@@ -39,10 +39,10 @@ public class CommandContainer {
     }
 
     /**
-     * 初始化框架的所有指令
+     * 初始化框架本身的所有指令
      */
     public void registerCommands() {
-        registerCommand(IOC.getBean(CmdHelp.class));
+        registerCommand(IOC.getBean(CmdHelp.class,"wolfird"));
     }
 
     /**
