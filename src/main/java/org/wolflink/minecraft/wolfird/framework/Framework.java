@@ -5,8 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wolflink.common.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
-import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandExecutor;
-import org.wolflink.minecraft.wolfird.framework.command.WolfirdTabCompleter;
+import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandAnalyser;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
@@ -44,8 +43,7 @@ public final class Framework extends JavaPlugin {
 //        notifier.info("正在加载可用子插件...");
 //        loadSubPlugins();
         notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") + " §fms");
-        Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setExecutor(IOC.getBean(WolfirdCommandExecutor.class));
-        Objects.requireNonNull(Bukkit.getPluginCommand("wolfird")).setTabCompleter(IOC.getBean(WolfirdTabCompleter.class));
+        IOC.getBean(WolfirdCommandAnalyser.class).register("wolfird");
         IOC.getBean(CommandContainer.class).registerCommands();
     }
 
