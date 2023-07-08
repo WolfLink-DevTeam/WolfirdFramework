@@ -94,7 +94,7 @@ public class YamlConfig extends BaseConfig {
     @Override
     public void initDefault() {
         try {
-            load();
+            fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
             configFile.createNewFile();
             defaultConfig.forEach(this::update);
             save();
