@@ -8,6 +8,7 @@ import org.wolflink.minecraft.wolfird.framework.gamestage.stageholder.StageHolde
 public abstract class Stage implements IScheduler {
     @Getter
     private final String displayName;
+    @Getter
     private final SubScheduler subScheduler;
     @Getter
     private final StageHolder stageHolder;
@@ -41,20 +42,4 @@ public abstract class Stage implements IScheduler {
      * 具体阶段离开时的业务实现
      */
     protected abstract void onLeave();
-    @Override
-    public void runTaskLater(Runnable runnable, long delay) {
-        subScheduler.runTaskLater(runnable,delay);
-    }
-    @Override
-    public void runTaskLaterAsync(Runnable runnable, long delay) {
-        subScheduler.runTaskLaterAsync(runnable,delay);
-    }
-    @Override
-    public void runTaskTimer(Runnable runnable, long delay, long period) {
-        subScheduler.runTaskTimer(runnable,delay,period);
-    }
-    @Override
-    public void runTaskTimerAsync(Runnable runnable, long delay, long period) {
-        subScheduler.runTaskTimerAsync(runnable,delay,period);
-    }
 }
