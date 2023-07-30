@@ -1,16 +1,19 @@
 package org.wolflink.minecraft.wolfird.framework.command;
 
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
+import org.bukkit.entity.Player;
+import org.wolflink.common.ioc.IOC;
 import org.wolflink.common.ioc.Inject;
+import org.wolflink.common.ioc.Singleton;
 import org.wolflink.minecraft.wolfird.framework.bukkit.TNode;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
-import org.wolflink.common.ioc.IOC;
-import org.wolflink.common.ioc.Singleton;
 import org.wolflink.minecraft.wolfird.framework.notifier.BaseNotifier;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,8 +26,8 @@ public class WolfirdCommandAnalyser implements CommandExecutor, TabCompleter {
 
     public void register(String mainCommand) {
         PluginCommand pluginCommand = Bukkit.getPluginCommand(mainCommand);
-        if(pluginCommand == null) {
-            notifier.warn("尝试注册指令失败，未找到该 Bukkit 指令："+mainCommand);
+        if (pluginCommand == null) {
+            notifier.warn("尝试注册指令失败，未找到该 Bukkit 指令：" + mainCommand);
             return;
         }
         pluginCommand.setExecutor(this);
@@ -32,8 +35,7 @@ public class WolfirdCommandAnalyser implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        CommandContainer commandContainer = IOC.getBean(CommandContainer.class);
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, @NonNull String[] args) {
         String[] allArgs = new String[args.length + 1];
         allArgs[0] = command.getName();
         System.arraycopy(args, 0, allArgs, 1, args.length);
@@ -42,14 +44,22 @@ public class WolfirdCommandAnalyser implements CommandExecutor, TabCompleter {
         else wolfirdCommand.tryExecute(sender, allArgs);
         return true;
     }
+
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
+    @Nullable
+    public List<String> onTabComplete(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, @NonNull String[] args) {
         args = Arrays.copyOfRange(args, 0, args.length - 1);
         List<String> result = new ArrayList<>();
         TNode<String> wolfird = commandContainer.getCommandTree().get(command.getName());
         if (wolfird == null) return result;
         TNode<String> node = wolfird.getByPath(args);
         if (node == null) return result;
+        if (node.getKeys().contains("{player}")) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                result.add(player.getName());
+            }
+            return result;
+        }
         return new ArrayList<>(node.getKeys());
     }
 }

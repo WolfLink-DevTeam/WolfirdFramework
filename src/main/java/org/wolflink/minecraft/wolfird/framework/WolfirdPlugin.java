@@ -4,10 +4,11 @@ package org.wolflink.minecraft.wolfird.framework;
 import lombok.Getter;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.wolflink.common.ioc.IOC;
 import org.wolflink.minecraft.wolfird.framework.bukkit.WolfirdCommand;
 import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.SubScheduler;
-import org.wolflink.minecraft.wolfird.framework.container.*;
-import org.wolflink.common.ioc.IOC;
+import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
+import org.wolflink.minecraft.wolfird.framework.container.WolfirdPluginContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.SubPluginNotifier;
 
 import java.util.HashSet;
@@ -16,31 +17,31 @@ import java.util.Set;
 /**
  * 代表一个 Wolfird 子插件
  */
+@Getter
 public abstract class WolfirdPlugin extends JavaPlugin {
 
-    @Getter
-    private final SubScheduler subScheduler;
     /**
      * 插件描述信息，详见 plugin.yml
      */
-    protected final @Getter PluginDescriptionFile info;
+    protected final PluginDescriptionFile info;
+    protected final SubPluginNotifier notifier;
+    protected final WolfirdPluginContainer container;
+    private final SubScheduler subScheduler;
+    private final Set<WolfirdCommand> commandSet = new HashSet<>();
 
-    protected final @Getter SubPluginNotifier notifier;
-
-    protected final @Getter WolfirdPluginContainer container;
-
-    public WolfirdPlugin() {
+    protected WolfirdPlugin() {
         this.info = getDescription();
-        if(info.getPrefix() == null)this.notifier = new SubPluginNotifier("§f"+this.getClass().getSimpleName());
+        if (info.getPrefix() == null) this.notifier = new SubPluginNotifier("§f" + this.getClass().getSimpleName());
         else this.notifier = new SubPluginNotifier(info.getPrefix());
         this.container = IOC.getBean(WolfirdPluginContainer.class);
         this.subScheduler = new SubScheduler();
     }
-    private final Set<WolfirdCommand> commandSet = new HashSet<>();
+
     public final void bindCommand(WolfirdCommand command) {
         commandSet.add(command);
         registerCommand(command);
     }
+
     /**
      * 向框架中注册指令
      */
@@ -54,6 +55,7 @@ public abstract class WolfirdPlugin extends JavaPlugin {
     private void unregisterCommand(WolfirdCommand command) {
         IOC.getBean(CommandContainer.class).registerCommand(command);
     }
+
     private void unregisterBindCommands() {
         commandSet.forEach(this::unregisterCommand);
     }
@@ -69,8 +71,11 @@ public abstract class WolfirdPlugin extends JavaPlugin {
         } else notifier.error("注册失败");
         afterEnabled();
     }
+
     public abstract void afterEnabled();
+
     public abstract void beforeDisabled();
+
     /**
      * 注销方法，向框架容器注销该子插件
      */

@@ -1,11 +1,11 @@
 package org.wolflink.minecraft.wolfird.framework;
 
+import lombok.Cleanup;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.wolflink.common.ioc.IOC;
-import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
 import org.wolflink.minecraft.wolfird.framework.command.WolfirdCommandAnalyser;
+import org.wolflink.minecraft.wolfird.framework.config.ConfigProjection;
 import org.wolflink.minecraft.wolfird.framework.config.FrameworkConfig;
 import org.wolflink.minecraft.wolfird.framework.container.CommandContainer;
 import org.wolflink.minecraft.wolfird.framework.notifier.FrameworkNotifier;
@@ -14,7 +14,6 @@ import org.wolflink.minecraft.wolfird.framework.utils.TimingUtil;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 框架 Bukkit 插件主类
@@ -23,7 +22,8 @@ public final class Framework extends JavaPlugin {
 
     @Getter
     private static Framework instance;
-    private final @Getter FrameworkNotifier notifier;
+    @Getter
+    private final FrameworkNotifier notifier;
     private final File bannerFile;
 
     public Framework() {
@@ -31,15 +31,17 @@ public final class Framework extends JavaPlugin {
         // 首先加载配置文件
         IOC.getBean(FrameworkConfig.class).load();
         notifier = IOC.getBean(FrameworkNotifier.class);
-        bannerFile = new File(getDataFolder(),"banner.txt");
+        bannerFile = new File(getDataFolder(), "banner.txt");
     }
+
     @Override
     public void onEnable() {
         showBanner();
         notifier.info("开始初始化");
         TimingUtil.start("framework_init");
 //        this.saveDefaultConfig();
-        if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) IOC.getBean(MongoDB.class).setError(false);
+        if (Boolean.TRUE.equals(ConfigProjection.MONGO_ENABLED.getDefaultValue()))
+            IOC.getBean(MongoDB.class).setError(false);
 //        notifier.info("正在加载可用子插件...");
 //        loadSubPlugins();
         notifier.info("§f初始化完成，用时 §a" + TimingUtil.finish("framework_init") + " §fms");
@@ -51,7 +53,7 @@ public final class Framework extends JavaPlugin {
     public void onDisable() {
         // 保存配置文件
         notifier.info("开始卸载框架");
-        if((Boolean) ConfigProjection.MONGO_ENABLED.getDefaultValue()) {
+        if (Boolean.TRUE.equals(ConfigProjection.MONGO_ENABLED.getDefaultValue())) {
             if (IOC.getBean(MongoDB.class).isError()) return;
             IOC.getBean(FrameworkConfig.class).save();
             IOC.getBean(MongoDB.class).close();
@@ -59,7 +61,7 @@ public final class Framework extends JavaPlugin {
         notifier.info("框架已被完全卸载");
     }
 
-//    private void loadSubPlugins() {
+    //    private void loadSubPlugins() {
 //        File subPluginFolder = new File(this.getDataFolder().getPath(), "plugins");
 //        if (!subPluginFolder.exists()) subPluginFolder.mkdirs();
 //        Bukkit.getPluginManager().loadPlugins(subPluginFolder);
@@ -67,6 +69,7 @@ public final class Framework extends JavaPlugin {
     private void createBannerFile() {
         try {
             bannerFile.createNewFile();
+            @Cleanup
             FileOutputStream fos = new FileOutputStream(bannerFile);
             fos.write("\n".getBytes());
             fos.write("\n".getBytes());
@@ -77,29 +80,29 @@ public final class Framework extends JavaPlugin {
             fos.write("╚███╔███╔╝╚██████╔╝███████╗██║     ██║██║  ██║██████╔╝\n".getBytes());
             fos.write(" ╚══╝╚══╝  ╚═════╝ ╚══════╝╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝\n".getBytes());
             fos.write("\n".getBytes());
-            fos.close();
         } catch (IOException e) {
             e.printStackTrace();
             notifier.error("在创建 banner.txt 文件时遇到了问题，请查看上方详细错误信息。");
         }
     }
+
     private void showBanner() {
-        if(!bannerFile.exists()) {
+        if (!bannerFile.exists()) {
             createBannerFile();
         }
         List<String> bannerText = new ArrayList<>();
         try {
+            @Cleanup
             FileInputStream fis = new FileInputStream(bannerFile);
+            @Cleanup
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-            for (String line = br.readLine();line != null;line = br.readLine()) {
-                if(line.contains("%")) {
-                    line = line.replaceAll("%author%","WolfLink - DevTeam");
-                    line = line.replaceAll("%version%", getDescription().getVersion());
+            for (String line = br.readLine(); line != null; line = br.readLine()) {
+                if (line.contains("%")) {
+                    line = line.replace("%author%", "WolfLink - DevTeam");
+                    line = line.replace("%version%", getDescription().getVersion());
                 }
                 bannerText.add(line);
             }
-            br.close();
-            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
             notifier.error("在读取 banner.txt 文件时遇到了问题，请查看上方详细错误信息。");
