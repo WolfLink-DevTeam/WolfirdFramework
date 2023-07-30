@@ -1,11 +1,10 @@
 package org.wolflink.minecraft.wolfird.framework.gamestage.stage;
 
 import lombok.Getter;
-import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.IScheduler;
 import org.wolflink.minecraft.wolfird.framework.bukkit.scheduler.SubScheduler;
 import org.wolflink.minecraft.wolfird.framework.gamestage.stageholder.StageHolder;
 
-public abstract class Stage implements IScheduler {
+public abstract class Stage {
     @Getter
     private final String displayName;
     @Getter
