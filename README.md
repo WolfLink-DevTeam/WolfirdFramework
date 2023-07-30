@@ -17,6 +17,8 @@
 > 如果你还没有部署 `MongoDB` 请前往
 > https://www.mongodb.com/try/download/community
 > 下载社区版 `MongoDB` 并安装，相关配置请自行查阅文档。
+> 
+> 也可以使用其他的数据库，具体方法请参阅源码和WIKI。
 
 ### 发布日志
 
@@ -30,6 +32,7 @@
 - ~~改进 IOC.IOC 容器，支持动态传入 Bean Provider~~
 - ~~将 IOC 模块单独抽离出去维护~~
 - 添加 `Player` 对象相关的封装，以便于更规范地动态修改玩家属性，如 移动速度、生命值、基础伤害、伤害增益...；
+- 添加 `Monster` 对象相关的封装，以便于更规范地动态修改怪物属性，如 移动速度、生命值、基础伤害、伤害增益...；
 - 编写更加详细的开发 WIKI；
 
 ### 开发者教程
@@ -53,12 +56,14 @@
 &emsp;&emsp;在`maven`配置文件`pom.xml`中添加上述代码后即可引入`Wolfird Framework`开发框架。
 #### 主类
 
-&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `SubPlugin`。
+&emsp;&emsp;子插件主类不再直接继承 `JavaPlugin` ，而是继承框架提供的 `WolfirdPlugin`。
 
 ```java
+import org.wolflink.minecraft.wolfird.framework.WolfirdPlugin;
+
 // 这是一个示例模块插件的主类
-public final class WolfirdTestAddon1 extends SubPlugin {
-	// 具体方法...
+public final class WolfirdTestAddon1 extends WolfirdPlugin {
+    // 具体方法...
 }
 ```
 
