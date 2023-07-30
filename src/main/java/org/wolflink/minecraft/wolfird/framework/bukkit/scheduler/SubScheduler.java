@@ -17,23 +17,50 @@ public class SubScheduler implements IScheduler {
     private final Set<Integer> taskIdSet = new HashSet<>();
 
     @Override
-    public void runTaskLater(Runnable runnable, long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLater(Framework.getInstance(), runnable, delay).getTaskId());
+    public void cancelTask(int taskId) {
+        Bukkit.getScheduler().cancelTask(taskId);
     }
 
     @Override
-    public void runTaskLaterAsync(Runnable runnable, long delay) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(), runnable, delay).getTaskId());
+    public int runTask(Runnable runnable) {
+        int taskId = Bukkit.getScheduler().runTask(Framework.getInstance(),runnable).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
     }
 
     @Override
-    public void runTaskTimer(Runnable runnable, long delay, long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimer(Framework.getInstance(), runnable, delay, period).getTaskId());
+    public int runTaskAsync(Runnable runnable) {
+        int taskId = Bukkit.getScheduler().runTaskAsynchronously(Framework.getInstance(),runnable).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
     }
 
     @Override
-    public void runTaskTimerAsync(Runnable runnable, long delay, long period) {
-        taskIdSet.add(Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(), runnable, delay, period).getTaskId());
+    public int runTaskLater(Runnable runnable, long delay) {
+        int taskId = Bukkit.getScheduler().runTaskLater(Framework.getInstance(), runnable, delay).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
+    }
+
+    @Override
+    public int runTaskLaterAsync(Runnable runnable, long delay) {
+        int taskId = Bukkit.getScheduler().runTaskLaterAsynchronously(Framework.getInstance(), runnable, delay).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
+    }
+
+    @Override
+    public int runTaskTimer(Runnable runnable, long delay, long period) {
+        int taskId = Bukkit.getScheduler().runTaskTimer(Framework.getInstance(), runnable, delay, period).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
+    }
+
+    @Override
+    public int runTaskTimerAsync(Runnable runnable, long delay, long period) {
+        int taskId = Bukkit.getScheduler().runTaskTimerAsynchronously(Framework.getInstance(), runnable, delay, period).getTaskId();
+        taskIdSet.add(taskId);
+        return taskId;
     }
 
     public void cancelAllTasks() {
