@@ -82,7 +82,7 @@ public class TNode<T> {
         if (pathNode == null) return;
         if (pathValues.length > 1) {
             pathNode.pathDel(Arrays.copyOfRange(pathValues, 1, pathValues.length));
-            if (pathNode.references.size() == 0) del(pathNode);
+            if (pathNode.references.isEmpty()) del(pathNode);
         } else del(pathValues[0]);
     }
 }
