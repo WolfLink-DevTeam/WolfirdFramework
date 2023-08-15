@@ -1,6 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.bukkit;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.wolflink.common.ioc.IOC;
@@ -116,7 +117,10 @@ public abstract class WolfirdCommand {
      * 强制执行指令，无视检查
      *
      * @param sender 指令调用方
-     * @param args   根据指令模板解析的有效参数列表
+     * @param args   根据指令模板解析的有效参数列表(可空，不为null)
      */
-    protected abstract void execute(CommandSender sender, String[] args);
+    public abstract void execute(CommandSender sender,@NonNull String[] args);
+    public void execute(CommandSender sender) {
+        execute(sender,new String[]{});
+    }
 }

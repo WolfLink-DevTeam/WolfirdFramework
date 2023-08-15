@@ -20,7 +20,7 @@ public class CmdHelp extends WolfirdCommand {
     }
 
     @Override
-    protected void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] args) {
         sender.sendMessage(" ");
         sender.sendMessage("§8[ §a" + mainCommand + " §8] §f指令帮助");
         sender.sendMessage(" ");
