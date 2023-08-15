@@ -6,7 +6,7 @@
 
     <groupId>org.wolflink.minecraft.wolfird</groupId>
     <artifactId>wolfird-framework</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9</version>
     <packaging>jar</packaging>
 
     <name>WolfirdFramework</name>

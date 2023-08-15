@@ -118,5 +118,5 @@ public abstract class WolfirdCommand {
      * @param sender 指令调用方
      * @param args   根据指令模板解析的有效参数列表
      */
-    protected abstract void execute(CommandSender sender, String[] args);
+    public abstract void execute(CommandSender sender, String[] args);
 }
