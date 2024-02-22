@@ -1,6 +1,8 @@
 package org.wolflink.minecraft.wolfird.framework.database.repository;
 
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,6 +21,7 @@ public abstract class MapRepository<K, V> extends KVRepository<K,V> {
         map.put(getPrimaryKey(value), value);
     }
 
+    @Nullable
     public V find(K key) {
         if (key == null) return null;
         return map.get(key);
@@ -37,6 +40,7 @@ public abstract class MapRepository<K, V> extends KVRepository<K,V> {
         removedKeys.forEach(this::deleteByKey);
     }
 
+    @Nonnull
     @Override
     public Collection<V> findAll() {
         return map.values();

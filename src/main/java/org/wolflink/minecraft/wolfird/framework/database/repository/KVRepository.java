@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.database.repository;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -10,7 +11,9 @@ public abstract class KVRepository<K,V> {
      * @param value 值
      * @return      主键
      */
+    @Nonnull
     public abstract K getPrimaryKey(V value);
+    @Nonnull
     public abstract Collection<V> findAll();
     public abstract void clear();
     /**
@@ -36,6 +39,7 @@ public abstract class KVRepository<K,V> {
      * @param filter    条件过滤器
      * @return          符合条件的所有值的列表(可能为空列表)
      */
+    @Nonnull
     public Collection<V> findBy(Function<V,Boolean> filter) {
         return findAll().stream().filter(filter::apply).collect(Collectors.toList());
     }

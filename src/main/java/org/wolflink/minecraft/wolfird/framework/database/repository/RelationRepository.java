@@ -1,5 +1,6 @@
 package org.wolflink.minecraft.wolfird.framework.database.repository;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 /**
@@ -28,10 +29,12 @@ public abstract class RelationRepository<K1,V1,K2,V2> {
         v1Map.remove(getValue1(k1));
         v2Map.remove(getValue2(k2));
     }
+    @Nullable
     public V2 find2(V1 v1) {
         K2 k2 = v1Map.get(v1);
         return getValue2(k2);
     }
+    @Nullable
     public V1 find1(V2 v2) {
         K1 k1 = v2Map.get(v2);
         return getValue1(k1);

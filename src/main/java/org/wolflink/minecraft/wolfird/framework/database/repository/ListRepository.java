@@ -1,5 +1,7 @@
 package org.wolflink.minecraft.wolfird.framework.database.repository;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,8 +44,9 @@ public abstract class ListRepository<K,V> extends KVRepository<K,V> {
      * @param key   主键
      * @return      匹配主键的值列表
      */
+    @Nonnull
     public List<V> find(K key) {
-        if (key == null) return null;
+        if (key == null) return new ArrayList<>();
         return list.stream().filter(v -> getPrimaryKey(v).equals(key)).collect(Collectors.toList());
     }
 
@@ -52,6 +55,7 @@ public abstract class ListRepository<K,V> extends KVRepository<K,V> {
      * @param index 索引
      * @return      值
      */
+    @Nullable
     public V find(int index) {
         if(index >= list.size() || index < 0)return null;
         return list.get(index);
@@ -65,6 +69,7 @@ public abstract class ListRepository<K,V> extends KVRepository<K,V> {
         list.remove(index);
     }
 
+    @Nonnull
     @Override
     public Collection<V> findAll() {
         return list;
